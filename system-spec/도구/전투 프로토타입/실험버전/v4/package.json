@@ -1,0 +1,20 @@
+{
+  "name": "waredo-battle-prototype-v3-counter",
+  "private": true,
+  "version": "0.4.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build --emptyOutDir false",
+    "build:standalone": "npm run build && node scripts/build-standalone.mjs",
+    "build:portable": "npm run build && node scripts/build-portable.mjs",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "phaser": "^3.90.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.2",
+    "vite": "^7.1.2"
+  }
+}

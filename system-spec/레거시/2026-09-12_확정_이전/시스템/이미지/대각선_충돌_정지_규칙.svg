@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="530" viewBox="0 0 1000 530" role="img" aria-labelledby="title desc">
+  <title id="title">대각선 충돌 시 정지 셀 규칙</title>
+  <desc id="desc">직선이 점유 셀의 면을 통과하면 해당 면 앞의 셀에 정지하고, 꼭짓점을 통과하면 진행 방향 반대쪽 대각선 셀에 정지하는 예시다.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#2563eb"/></marker>
+    <style>
+      .bg{fill:#f8fafc}.panel{fill:#fff;stroke:#cbd5e1;stroke-width:2}.grid{fill:none;stroke:#cbd5e1;stroke-width:1}.title{font:700 28px sans-serif;fill:#0f172a}.head{font:700 22px sans-serif;fill:#0f172a}.body{font:16px sans-serif;fill:#334155}.small{font:14px sans-serif;fill:#475569}.celltext{font:700 15px sans-serif;fill:#0f172a;text-anchor:middle;dominant-baseline:middle}.blocked{fill:#fecaca;stroke:#dc2626;stroke-width:3}.stop{fill:#bbf7d0;stroke:#16a34a;stroke-width:3}.start{fill:#bfdbfe;stroke:#2563eb;stroke-width:3}.move{fill:none;stroke:#2563eb;stroke-width:4;marker-end:url(#arrow)}.entry{fill:#7c3aed;stroke:#fff;stroke-width:2}.touch{fill:#fef3c7;stroke:#d97706;stroke-width:2;stroke-dasharray:5 4}.formula{fill:#eef2ff;stroke:#818cf8;stroke-width:1.5}
+      @media (prefers-color-scheme:dark){.bg{fill:#0f172a}.panel{fill:#111827;stroke:#475569}.grid{stroke:#475569}.title,.head,.celltext{fill:#f8fafc}.body,.small{fill:#cbd5e1}.formula{fill:#1e1b4b;stroke:#818cf8}.entry{stroke:#111827}}
+    </style>
+  </defs>
+  <rect class="bg" width="1000" height="530"/>
+  <text class="title" x="40" y="48">대각선 충돌 정지 셀</text>
+  <text class="body" x="40" y="78">빨간 셀 B는 점유 셀, 초록 셀은 충돌 직전에 멈추는 셀이다.</text>
+
+  <g transform="translate(30 105)">
+    <rect class="panel" width="455" height="390" rx="14"/>
+    <text class="head" x="24" y="38">① 셀의 면으로 진입</text>
+    <text class="body" x="24" y="66">직선이 지나는 면 바로 앞 셀에서 정지</text>
+    <g transform="translate(48 88)">
+      <path class="grid" d="M0 0H360M0 60H360M0 120H360M0 180H360M0 240H360M0 0V240M60 0V240M120 0V240M180 0V240M240 0V240M300 0V240M360 0V240"/>
+      <rect class="start" x="62" y="122" width="56" height="56" rx="8"/><text class="celltext" x="90" y="150">시작</text>
+      <rect class="stop" x="182" y="62" width="56" height="56" rx="8"/><text class="celltext" x="210" y="90">정지</text>
+      <rect class="blocked" x="242" y="62" width="56" height="56" rx="8"/><text class="celltext" x="270" y="90">B</text>
+      <path class="move" d="M90 150L240 100"/>
+      <circle class="entry" cx="240" cy="100" r="7"/>
+      <text class="small" x="248" y="145">세로면 진입</text>
+    </g>
+    <rect class="formula" x="48" y="338" width="359" height="34" rx="7"/>
+    <text class="small" x="62" y="360">stopCell=(bx−sign(Dx), by)</text>
+  </g>
+
+  <g transform="translate(515 105)">
+    <rect class="panel" width="455" height="390" rx="14"/>
+    <text class="head" x="24" y="38">② 셀의 꼭짓점으로 진입</text>
+    <text class="body" x="24" y="66">진행 방향 반대쪽 대각선 셀에서 정지</text>
+    <g transform="translate(48 88)">
+      <path class="grid" d="M0 0H360M0 60H360M0 120H360M0 180H360M0 240H360M0 0V240M60 0V240M120 0V240M180 0V240M240 0V240M300 0V240M360 0V240"/>
+      <rect class="start" x="122" y="122" width="56" height="56" rx="8"/><text class="celltext" x="150" y="150">시작</text>
+      <rect class="stop" x="182" y="62" width="56" height="56" rx="8"/><text class="celltext" x="210" y="90">정지</text>
+      <rect class="blocked" x="242" y="2" width="56" height="56" rx="8"/><text class="celltext" x="270" y="30">B</text>
+      <rect class="touch" x="182" y="2" width="56" height="56" rx="8"/><text class="small" x="210" y="31" text-anchor="middle">접촉만</text>
+      <rect class="touch" x="242" y="62" width="56" height="56" rx="8"/><text class="small" x="270" y="91" text-anchor="middle">접촉만</text>
+      <path class="move" d="M150 150L240 60"/>
+      <circle class="entry" cx="240" cy="60" r="7"/>
+      <text class="small" x="105" y="205">옆 셀은 꼭짓점만 닿으므로 진입하지 않음</text>
+    </g>
+    <rect class="formula" x="48" y="338" width="359" height="34" rx="7"/>
+    <text class="small" x="62" y="360">stopCell=(bx−sign(Dx), by−sign(Dy))</text>
+  </g>
+</svg>

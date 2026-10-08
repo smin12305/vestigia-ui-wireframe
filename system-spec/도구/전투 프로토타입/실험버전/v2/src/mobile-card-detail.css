@@ -1,0 +1,704 @@
+/* 좌측 캐릭터 카드 전체 상세 보기 */
+.mobile-unit-dock[data-unit-detail]{cursor:pointer;transition:border-color .16s ease,transform .16s ease,background .16s ease}
+.mobile-unit-dock[data-unit-detail]:hover,.mobile-unit-dock[data-unit-detail]:focus-visible{border-color:#76d9ed;background:linear-gradient(115deg,#0e1c22f2,#17313aed);outline:none;transform:translateY(-2px)}
+.mobile-card-prompt{display:block!important;margin-top:5px!important;color:#70939c!important;font-size:clamp(6px,.48vw,9px)!important}
+.mobile-skill-detail{width:118%;padding:10px;background:#11151bf5;pointer-events:none}
+.mobile-skill-detail header{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:7px;padding-bottom:6px;border-bottom:1px solid #3c4650}
+.mobile-skill-detail header b{color:#f0e6ff;font-size:10px}
+.mobile-skill-detail header small{color:#83959a;font-size:6px}
+.mobile-detail-action{padding:6px 7px;border-left:2px solid #67d7ef;background:#10232a}
+.mobile-detail-action+.mobile-detail-action{margin-top:5px}
+.mobile-detail-action.skill{border-color:#bd8de8;background:#21182b}
+.mobile-detail-action strong,.mobile-detail-action span,.mobile-detail-action small{display:block}
+.mobile-detail-action strong{color:#e9f4f5;font-size:9px}
+.mobile-detail-action span{margin-top:2px;font-size:8px;color:#b8dfe8}
+.mobile-detail-action small{margin-top:3px;color:#9caaae;font-size:7px;line-height:1.35}
+
+/* 전투 캔버스는 HUD 아래 영역을 가득 채우고, 내부 카메라만 안전 범위로 조정한다. */
+.game-shell[data-phase="계획"] .board-stage,.game-shell[data-phase="실행"] .board-stage{inset:0;left:0;top:0;width:100%!important;height:100%!important;max-width:none;max-height:none;aspect-ratio:auto;transform:none;border-radius:0;box-shadow:none}
+.game-shell[data-phase="실행"] .board-stage{width:100%!important;transform:none}
+.game-shell[data-phase="계획"] .board-stage::after,.game-shell[data-phase="실행"] .board-stage::after{display:none}
+
+/* 시간대 색은 상단 배경과 전투 캔버스에 같은 오버레이로 적용해 경계가 갈라지지 않게 한다. */
+.game-shell{--time-wash:rgb(50 174 101 / .075)}
+.game-shell[data-time="현재"]{--time-wash:rgb(50 174 101 / .075)}
+.game-shell[data-time="미래"]{--time-wash:rgb(48 126 226 / .115)}
+.game-shell[data-time="과거"]{--time-wash:rgb(226 177 48 / .105)}
+.game-shell[data-phase="계획"] .board-stage::before,.game-shell[data-phase="실행"] .board-stage::before{content:'';position:absolute;z-index:4;inset:0;background:var(--time-wash);mix-blend-mode:color;pointer-events:none;transition:background .75s ease,opacity .75s ease}
+.game-shell[data-phase="계획"] .timeline-wrap::after,.game-shell[data-phase="실행"] .timeline-wrap::after{content:'';position:absolute;z-index:0;left:0;right:0;top:3.23vw;bottom:0;background:var(--time-wash);mix-blend-mode:color;pointer-events:none;transition:background .75s ease,opacity .75s ease}
+.game-shell.time-screen-shift .board-stage::before,.game-shell.time-screen-shift .timeline-wrap::after{animation:time-wash-arrive 1.55s ease-out both}
+@keyframes time-wash-arrive{0%{opacity:.25}22%{opacity:1.65}48%{opacity:.72}100%{opacity:1}}
+
+/* 고원지대 배경은 전투 전체에 한 장만 사용하고 캔버스와 HUD는 투명 레이어로 올린다. */
+.battle-background{display:none;position:absolute;z-index:0;left:50%;top:7%;width:108.4%;height:auto;max-width:none;pointer-events:none;transform:translateX(-50%)}
+.game-shell[data-phase="계획"] .battle-background,.game-shell[data-phase="실행"] .battle-background,.game-shell[data-phase="배치"] .battle-background{display:block}
+.game-shell[data-phase="계획"] .timeline-wrap,.game-shell[data-phase="실행"] .timeline-wrap{left:0;right:0;overflow:hidden;border-bottom:0;background:transparent}
+.game-shell[data-phase="계획"] .board-stage,.game-shell[data-phase="실행"] .board-stage,.game-shell[data-phase="배치"] .board-stage{background:transparent}
+.timeline{position:relative;z-index:1}
+.header-actions{margin-left:auto;display:flex;align-items:center;gap:.55rem}.header-actions .phase-badge{margin-left:0}
+.game-shell[data-phase="계획"] .header-actions,.game-shell[data-phase="실행"] .header-actions{position:absolute;z-index:70;right:1.2%;top:calc(100% + .35rem);margin-left:0}
+
+/* 자동 시간 순환 회중시계 */
+.mobile-time-dock{z-index:56!important;width:11.5%!important;min-width:132px}
+.pocket-watch-wrap{position:relative;display:flex;flex-direction:column;align-items:center;width:100%;color:#f6f0df;cursor:help}
+.mobile-watch,.watch-face{--hand-angle:0deg;position:relative;background:radial-gradient(circle at 50% 50%,#17130d 0 2.2%,#e6bd58 2.8% 4.2%,transparent 4.8%),repeating-conic-gradient(from -2deg,#9b772214 0 1deg,transparent 1deg 9deg),radial-gradient(circle at 46% 40%,#fffef8 0 45%,#f4e8c9 58%,#d6b96f 64%,#fff0a6 67%,#8a5c18 71%,#e0b552 75%,#4a2d0b 79%,#b47a20 84%,#2a1808 100%)!important;border:2px solid #3f270b!important;box-shadow:inset 0 0 0 2px #f6d77b,inset 0 0 0 5px #805313,inset 0 0 0 7px #e9c96d,inset 0 0 18px #6e4b2044,0 8px 18px #0009,0 0 10px #e7bd5b44!important;transition:box-shadow .3s ease}
+.mobile-watch{width:clamp(72px,6.8vw,122px)!important;--dial-radius:clamp(27px,2.75vw,49px)}
+.watch-face{width:100px!important;height:100px!important;--dial-radius:38px}
+.watch-face::before{display:none}
+.mobile-watch{overflow:visible!important}
+.mobile-watch::after,.watch-face::after{content:'';position:absolute;z-index:1;inset:10%;border:1px solid #9d762d88;border-radius:50%;background:radial-gradient(circle at 34% 27%,#fff8d980 0 2%,transparent 17%),repeating-conic-gradient(from 4deg,transparent 0 14deg,#8a642515 14deg 15deg);box-shadow:inset 0 0 8px #6e4b2026,0 0 0 1px #fff4c244;pointer-events:none}
+.watch-crown{position:absolute;left:50%;top:-15%;width:28%;height:14%;transform:translateX(-50%);border:2px solid #4d300c;border-bottom:0;border-radius:8px 8px 2px 2px;background:linear-gradient(90deg,#755016,#f5d77c 28%,#9b6a1e 50%,#f1ce68 72%,#60400f);box-shadow:inset 0 0 0 1px #ffeaa0,0 2px 3px #0006}
+.watch-crown::after{content:'';position:absolute;left:18%;right:18%;top:-5px;height:4px;border:1px solid #53350d;border-radius:3px;background:repeating-linear-gradient(90deg,#7b5417 0 2px,#e5bf5b 2px 4px)}
+.watch-chain{position:absolute;left:74%;top:-5%;width:25%;height:31%;border:3px double #b98427;border-left:0;border-bottom:0;border-radius:50%;transform:rotate(18deg);filter:drop-shadow(1px 2px 2px #0007)}
+.watch-hour{--tick-color:#b29a62;position:absolute;z-index:2;left:50%;top:50%;width:3px;height:10px;border:0;border-radius:1px;opacity:.76;background:var(--tick-color);box-shadow:0 0 3px color-mix(in srgb,var(--tick-color) 55%,transparent);transform:translate(-50%,-50%) rotate(var(--tick-angle)) translateY(calc(-1 * var(--dial-radius)));transition:width .2s ease,height .2s ease,opacity .2s ease,box-shadow .2s ease,background .2s ease}
+.watch-hour.dial-현재{--tick-color:#2ea568}.watch-hour.dial-미래{--tick-color:#3186df}.watch-hour.dial-과거{--tick-color:#e2b72e}
+.watch-hour.active{width:4px;height:13px;opacity:1;background:var(--tick-color);box-shadow:0 0 5px 1px var(--tick-color),0 0 11px var(--tick-color)}
+.mobile-watch .watch-hand,.watch-face .hand{position:absolute!important;z-index:3;left:50%!important;top:17%!important;width:4px!important;height:33%!important;border-radius:70% 70% 3px 3px;background:linear-gradient(90deg,#050505,#45423b 48%,#080706 52%,#000)!important;transform-origin:50% 100%!important;transform:translateX(-50%) rotate(var(--hand-angle));box-shadow:1px 2px 2px #0007}
+.mobile-watch .watch-hand::after,.watch-face .hand::after{content:'';position:absolute;left:50%;bottom:-5px;width:9px;height:9px;transform:translateX(-50%);border:2px solid #5a390e;border-radius:50%;background:radial-gradient(circle,#fff1a0 0 22%,#b77d22 28% 58%,#3e270c 65%);box-shadow:0 1px 3px #0008}
+.watch-magic-grip{position:absolute;z-index:7;left:50%;top:50%;width:10px;height:35px;border-left:1px solid #a90e2a;border-right:1px solid #ef2945;border-radius:45%;opacity:0;background:repeating-linear-gradient(155deg,transparent 0 5px,#f12844 5px 6px,transparent 6px 10px),repeating-linear-gradient(25deg,transparent 0 8px,#8e1028 8px 9px,transparent 9px 13px);transform-origin:50% 100%;transform:translate(-50%,-100%) rotate(var(--hand-angle)) scaleY(1.08);filter:drop-shadow(0 0 2px #ff2948) drop-shadow(0 0 4px #7e0920);pointer-events:none}
+.watch-magic-grip::before,.watch-magic-grip::after{content:'';position:absolute;width:7px;height:10px;border:1px solid #e22240;border-left-color:transparent;border-bottom-color:transparent;border-radius:50%}
+.watch-magic-grip::before{left:-4px;top:4px;transform:rotate(38deg)}
+.watch-magic-grip::after{right:-4px;bottom:3px;transform:rotate(218deg)}
+.watch-face>b,.watch-face>small{display:none}
+.watch-period{margin-top:5px;font-size:clamp(8px,.72vw,13px)}
+.watch-tooltip{position:absolute;left:102%;top:2%;width:190px;padding:10px;border:1px solid #bb9141;border-radius:9px;display:flex;flex-direction:column;gap:4px;background:#0a1115f2;box-shadow:0 10px 26px #000a;opacity:0;visibility:hidden;transform:translateX(-6px);transition:.16s ease;pointer-events:none;text-align:left}
+.pocket-watch-wrap:hover .watch-tooltip,.pocket-watch-wrap:focus-within .watch-tooltip{opacity:1;visibility:visible;transform:none}
+.watch-tooltip b{color:#f3d77f;font-size:10px}.watch-tooltip span{color:#d8e0df;font-size:8px;line-height:1.4}.watch-tooltip em{color:#84979b;font-size:7px;font-style:normal}
+.mini-time-gauge{margin-top:5px!important}
+.time-shard-count{display:block;margin-top:3px;color:#f5dda0;font-size:clamp(6px,.52vw,10px);font-weight:900;letter-spacing:.02em;text-align:center;text-shadow:0 1px 2px #21130e}
+.suppress-time{width:100%;margin-top:5px;padding:6px 5px!important;border-color:#8d6e32!important;background:#151712e8!important;color:#f4d67a!important;font-size:8px!important;font-weight:800}
+.suppress-time small{display:block;margin-top:2px;color:#a9a081;font-size:6px;font-weight:500}
+.suppress-time.armed{border-color:#e84e50!important;color:#ffd3c7!important;background:#341417e8!important;box-shadow:0 0 14px #ef414866}
+.current-time-effect{display:flex;flex-direction:column;gap:3px;margin:7px 0;padding:8px;border:1px solid #7e6934;border-radius:7px;background:#151813}.current-time-effect b{color:#f2d377;font-size:9px}.current-time-effect span{font-size:7px;color:#d5dcda;line-height:1.35}.current-time-effect em{font-size:6px;color:#7f9296;font-style:normal}
+
+.mobile-watch.suppression-armed .watch-magic-grip,.watch-face.suppression-armed .watch-magic-grip{opacity:.96;transform:translate(-50%,-100%) rotate(var(--hand-angle)) scaleY(1)}
+.mobile-watch.suppression-press .watch-magic-grip,.watch-face.suppression-press .watch-magic-grip{animation:vine-wrap-in .82s cubic-bezier(.16,.82,.24,1) both}
+.mobile-watch.suppression-impact .watch-magic-grip,.watch-face.suppression-impact .watch-magic-grip{opacity:1;transform:translate(-50%,-100%) rotate(var(--hand-angle)) scale(1);animation:vine-impact-glow 1.1s ease-out both}
+.mobile-watch.suppression-armed,.watch-face.suppression-armed{box-shadow:inset 0 0 0 3px #f4d47b,inset 0 0 15px #f33b5555,0 0 18px #dc274d99!important}
+@keyframes watch-advance{0%,10%{transform:translateX(-50%) rotate(var(--hand-from))}54%{transform:translateX(-50%) rotate(calc(var(--hand-to) + 7deg))}69%{transform:translateX(-50%) rotate(calc(var(--hand-to) - 4deg))}82%{transform:translateX(-50%) rotate(calc(var(--hand-to) + 2deg))}100%{transform:translateX(-50%) rotate(var(--hand-to))}}
+@keyframes watch-suppressed{0%,100%{transform:translateX(-50%) rotate(var(--hand-angle))}10%{transform:translateX(-50%) rotate(calc(var(--hand-angle) - 4deg))}20%{transform:translateX(-50%) rotate(calc(var(--hand-angle) + 4deg))}30%{transform:translateX(-50%) rotate(calc(var(--hand-angle) - 3deg))}40%{transform:translateX(-50%) rotate(calc(var(--hand-angle) + 3deg))}50%{transform:translateX(-50%) rotate(calc(var(--hand-angle) - 4deg))}60%{transform:translateX(-50%) rotate(calc(var(--hand-angle) + 4deg))}72%{transform:translateX(-50%) rotate(calc(var(--hand-angle) - 2deg))}84%{transform:translateX(-50%) rotate(calc(var(--hand-angle) + 2deg))}}
+@keyframes vine-impact-glow{0%,100%{filter:drop-shadow(0 0 3px #ff153f) drop-shadow(0 0 7px #8d0928)}40%{filter:drop-shadow(0 0 9px #ff294c) drop-shadow(0 0 18px #b80b32)}}
+@keyframes vine-wrap-in{0%{opacity:0;transform:translate(-50%,-100%) rotate(var(--hand-angle)) scale(.35,1.2)}42%{opacity:1;transform:translate(-50%,-100%) rotate(var(--hand-angle)) scale(1.18,.96)}70%{transform:translate(-50%,-100%) rotate(var(--hand-angle)) scale(.94,1.03)}100%{opacity:.96;transform:translate(-50%,-100%) rotate(var(--hand-angle)) scale(1)}}
+
+/* 시계 클릭 시간대 효과 팝업 */
+.watch-guide-trigger{position:absolute!important;z-index:10!important;inset:0!important;width:100%!important;height:100%!important;padding:0!important;border:0!important;border-radius:50%!important;background:transparent!important;box-shadow:none!important;cursor:pointer}
+.watch-guide-trigger:focus-visible{outline:3px solid #ffe18a!important;outline-offset:5px}
+.time-guide-modal{position:absolute;z-index:300;inset:0;display:grid;place-items:center;background:#020608c7;backdrop-filter:blur(6px)}
+.time-guide-card{width:min(720px,72%);padding:22px;border:1px solid #a88745;border-radius:16px;background:linear-gradient(145deg,#121c21f8,#080e12fa);box-shadow:0 28px 90px #000d}
+.time-guide-card>header{display:flex;align-items:center;justify-content:space-between;padding-bottom:12px;border-bottom:1px solid #39484d}.time-guide-card header small{color:#d9b85d;font-size:8px;letter-spacing:.16em}.time-guide-card h2{margin:2px 0 0;font-size:24px}.time-guide-card header button{width:36px;height:36px;padding:0;border-radius:50%}.time-guide-card>p{margin:14px 0;color:#aebcbd;font-size:11px}
+.time-effect-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.time-effect-grid article{--time-color:#eee;min-height:170px;padding:16px;border:1px solid color-mix(in srgb,var(--time-color) 62%,#36464b);border-radius:12px;background:linear-gradient(155deg,color-mix(in srgb,var(--time-color) 15%,#152027),#0b1216);box-shadow:inset 0 3px var(--time-color)}.time-effect-grid .current{--time-color:#2fb46f}.time-effect-grid .future{--time-color:#3c91ec}.time-effect-grid .past{--time-color:#e3ba31}.time-effect-grid article b,.time-effect-grid article strong,.time-effect-grid article span,.time-effect-grid article em{display:block}.time-effect-grid article b{color:var(--time-color);font-size:26px}.time-effect-grid article strong{margin-top:18px;color:#edf3f1;font-size:12px}.time-effect-grid article span{margin-top:8px;color:#c2cecc;font-size:10px;line-height:1.45}.time-effect-grid article em{margin-top:10px;padding-top:10px;border-top:1px solid #ffffff1c;color:var(--time-color);font-size:9px;font-style:normal;font-weight:800;line-height:1.45}.time-guide-card>footer{margin-top:15px;display:flex;align-items:center;justify-content:space-between;gap:16px}.time-guide-card footer span{color:#9eabad;font-size:9px}.time-guide-card footer button{min-width:110px;background:#d5ad4f;color:#171005;font-weight:900}
+
+/* 시간대 전환 중앙 알림 */
+.time-announcement{position:absolute;z-index:220;left:50%;top:45%;min-width:260px;padding:18px 30px;border-top:1px solid #e4c269;border-bottom:1px solid #e4c269;text-align:center;background:linear-gradient(90deg,transparent,#081013e8 20% 80%,transparent);opacity:0;visibility:hidden;transform:translate(-50%,-50%) scale(.86);pointer-events:none}
+.time-announcement b,.time-announcement small{display:block}.time-announcement b{font-size:clamp(30px,3vw,56px);color:#fff2bf;letter-spacing:.16em;text-indent:.16em;text-shadow:0 0 22px #e6bd4e}.time-announcement small{margin-top:7px;color:#d8e0dc;font-size:clamp(8px,.7vw,13px)}
+.time-announcement.show{visibility:visible;animation:time-notice 2s ease both}
+@keyframes time-notice{0%{opacity:0;transform:translate(-50%,-50%) scale(.82)}14%,72%{opacity:1;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(-50%,-55%) scale(1.03)}}
+
+/* 행동 순서 변경은 전용 버튼을 켠 동안에만 허용 */
+.reorder-toggle{position:relative;z-index:4;flex:0 0 clamp(58px,4.2vw,82px);align-self:flex-start;width:clamp(58px,4.2vw,82px);min-width:0;height:88%;margin-right:clamp(4px,.5vw,10px);padding:7px 5px;border:1px solid #5c727b;border-radius:0 0 10px 10px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#091216e8;color:#d6e0df;font-size:clamp(6px,.52vw,9px);font-weight:800;line-height:1.25;text-align:center;backdrop-filter:blur(5px)}
+.reorder-toggle::before{content:'⇄';margin-bottom:5px;color:#f0c861;font-size:14px}.reorder-toggle.active{border-color:#f0c861;background:#302717e8;color:#ffe7a1;box-shadow:0 0 16px #d9a94355}
+.reorder-mode .timeline{gap:clamp(7px,.75vw,14px)}
+.reorder-mode .slot{transform:scale(1.1) translateY(3px)!important;opacity:1!important}
+.reorder-mode .slot.swappable{transform:scale(1.15) translateY(5px)!important;border-color:#6be1f5!important;box-shadow:0 0 18px #53cfe888!important;filter:brightness(1.16)}
+.reorder-mode .slot.order-selected{transform:scale(1.27) translateY(7px)!important;border-color:#ffe38b!important;box-shadow:0 0 25px #efc657aa!important}
+.reorder-mode .slot.order-locked{transform:scale(.9)!important;opacity:.35!important;filter:grayscale(.6)}
+
+.stats em{color:#7ce5ff;font-style:normal;font-weight:900}.effective-damage{color:inherit;font-size:inherit}.effective-damage.boosted{color:#ff6f68!important;text-shadow:0 0 7px #e62e3477;font-weight:1000}.time-buff-note,.mobile-time-buff{display:block;margin-top:4px;color:#ff8178!important;font-size:7px!important}
+@media(prefers-reduced-motion:reduce){.mobile-watch.time-tick .watch-hand,.watch-face.time-tick .hand,.mobile-watch.suppression-impact .watch-hand,.watch-face.suppression-impact .hand,.time-announcement.show{animation-duration:.2s}}
+
+/* 배포용 메인·전투 준비 흐름 */
+.front-flow{position:absolute;z-index:500;inset:0;overflow:hidden;color:#f5fbff;background:#06121c;isolation:isolate}
+.front-background{position:absolute;z-index:-2;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;pointer-events:none}.front-flow.main::after{content:'';position:absolute;z-index:-1;inset:0;background:linear-gradient(90deg,rgb(5 20 40 / .12),transparent 38% 67%,rgb(2 11 19 / .15));pointer-events:none}
+.game-shell[data-phase="배치"] #open-settings{display:none}
+.front-flow::before{content:'';position:absolute;z-index:-1;inset:0;pointer-events:none}.front-flow.size::before,.front-flow.coin::before{background:rgb(2 10 18 / .68);backdrop-filter:blur(5px)}
+.main-copy{position:absolute;left:4.8%;top:7%;width:31%;text-shadow:0 3px 18px #001b35}.main-copy small{color:#d7f4ff;font-size:clamp(8px,.65vw,12px);font-weight:900;letter-spacing:.22em}.main-copy .main-logo{display:block;width:min(82%,440px);height:auto;margin:8px 0 0;filter:drop-shadow(0 5px 15px #00162dcc)}.main-copy p{width:88%;margin:8px 0 0;color:#eaf8ff;font-size:clamp(8px,.72vw,14px);font-weight:700;line-height:1.6}
+.main-menu{position:absolute;left:5.3%;top:52%;width:clamp(190px,15.5vw,300px);display:flex;flex-direction:column;gap:7px}.main-menu>button{min-height:clamp(32px,3vw,54px);padding:7px 18px;border:1px solid #78cfe8;border-radius:7px;text-align:left;background:#071e31d9;color:#dff8ff;font-size:clamp(9px,.75vw,14px);font-weight:900;box-shadow:0 8px 22px #002c53aa;backdrop-filter:blur(5px)}
+.main-menu>.front-fullscreen{min-height:clamp(38px,3.5vw,62px);border-color:#b9dbe5;background:linear-gradient(110deg,#102a39e8,#173b49e8)}.front-fullscreen b,.front-fullscreen small{display:block}.front-fullscreen b{font-size:clamp(10px,.85vw,16px)}.front-fullscreen small{margin-top:2px;color:#a9c7cf;font-size:clamp(6px,.48vw,9px);font-weight:600}
+.main-menu>.front-start{position:relative;left:auto;top:auto;width:100%;min-height:clamp(48px,4.6vw,82px);padding:9px 19px;border:2px solid #9fe9ff;background:linear-gradient(110deg,#057bcce8,#12b7e6e8);color:#fff;transform:skewX(-5deg);box-shadow:0 12px 32px #003d73aa,inset 0 0 18px #a8f1ff33;transition:transform .18s ease,filter .18s ease,box-shadow .18s ease}.front-start:hover,.front-start:focus-visible{transform:skewX(-5deg) translateX(7px) scale(1.02);filter:brightness(1.1);box-shadow:0 16px 42px #004e8ecc,0 0 22px #77e3ff88}.front-start span,.front-start b{display:block;transform:skewX(5deg)}.front-start span{font-size:clamp(6px,.48vw,9px);font-weight:900;letter-spacing:.17em;opacity:.78}.front-start b{margin-top:1px;font-size:clamp(16px,1.45vw,27px)}
+.main-info-panel{position:absolute;z-index:4;left:23%;top:47%;width:min(620px,48%);max-height:45%;padding:16px;border:1px solid #76d9f3;border-radius:13px;overflow:auto;background:linear-gradient(145deg,#071a28f4,#0b2736f1);box-shadow:0 24px 70px #00101dcc,0 0 26px #42c9ee44;backdrop-filter:blur(10px)}.main-info-panel>header{display:flex;align-items:center;gap:9px;margin-bottom:12px}.main-info-panel header small{color:#65dfff;font-size:8px;font-weight:900;letter-spacing:.14em}.main-info-panel header b{font-size:18px}.main-info-panel header button{margin-left:auto;width:30px;height:30px;padding:0}.main-info-panel.characters>div{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.main-info-panel article{min-width:0;padding:8px;border:1px solid #315363;border-radius:9px;background:#07151dcc}.main-info-panel article>img{display:block;width:100%;height:105px;object-fit:contain;object-position:center bottom}.main-info-panel article span b,.main-info-panel article span small,.main-info-panel article span em{display:block}.main-info-panel article span b{font-size:13px}.main-info-panel article span small{margin-top:3px;color:#a8c3cc;font-size:7px;line-height:1.45}.main-info-panel article span em{margin-top:5px;color:#68dcff;font-size:7px;font-style:normal}.main-info-panel ol{margin:0;padding-left:20px}.main-info-panel li{margin:0 0 10px;color:#68dcff}.main-info-panel li b,.main-info-panel li span{display:block}.main-info-panel li b{color:#f2fbff;font-size:12px}.main-info-panel li span{margin-top:3px;color:#bad0d7;font-size:9px;line-height:1.5}
+.front-dialog{position:absolute;left:50%;top:50%;width:min(720px,64%);padding:28px;transform:translate(-50%,-50%);border:1px solid #77cce7;border-radius:16px;background:linear-gradient(145deg,#102d41f5,#071724f8);box-shadow:0 28px 100px #000d,0 0 36px #1b9bd744}.front-dialog>small{color:#79ddff;font-size:9px;font-weight:900;letter-spacing:.2em}.front-dialog h2{margin:5px 0 4px;font-size:clamp(22px,2vw,38px)}.front-dialog>p{color:#adc5ce;font-size:11px}
+.size-select>div{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px}.size-select>div>button{min-height:190px;padding:22px;border:1px solid #476776;border-radius:13px;text-align:left;background:linear-gradient(145deg,#18384a,#0c202d);transition:.18s ease}.size-select>div>button:hover,.size-select>div>button:focus-visible{border-color:#75dcfa;transform:translateY(-5px);box-shadow:0 14px 35px #03101caa,0 0 22px #32bde755}.size-select button b,.size-select button span,.size-select button em{display:block}.size-select button b{color:#e9fbff;font-size:42px}.size-select button span{margin-top:18px;color:#d1e4e9;font-size:12px}.size-select button em{margin-top:7px;color:#69dafa;font-size:9px;font-style:normal;font-weight:800}.front-back{margin-top:16px;padding:8px 2px;border:0;background:transparent;color:#a9c2ca}
+.coin-toss{width:min(460px,48%);text-align:center}.coin-toss .coin{position:relative;width:150px;height:150px;margin:25px auto;transform-style:preserve-3d;animation:coin-toss-spin .95s cubic-bezier(.15,.75,.22,1) both}.coin i{position:absolute;inset:0;display:grid;place-items:center;border:8px double #f1d27a;border-radius:50%;backface-visibility:hidden;background:radial-gradient(circle at 35% 30%,#fff1ac,#c38b28 64%,#745018);color:#332008;font-size:52px;font-style:normal;font-weight:1000;box-shadow:0 18px 32px #000a,inset 0 0 18px #fff6bd}.coin i+ i{transform:rotateY(180deg);background:radial-gradient(circle at 35% 30%,#ffd1cf,#bf4b4d 64%,#682326);color:#fff2e9}.coin-toss.revealed.ally .coin{animation:none;transform:rotateY(0deg)}.coin-toss.revealed.enemy .coin{animation:none;transform:rotateY(180deg)}.coin-toss p b,.coin-toss p span{display:block}.coin-toss p b{font-size:25px}.coin-toss p b.ally{color:#62dcff}.coin-toss p b.enemy{color:#ff8178}.coin-toss p span{margin-top:6px;color:#bacbd0;font-size:10px}@keyframes coin-toss-spin{0%{transform:translateY(45px) rotateY(0) rotateX(15deg);opacity:.2}55%{transform:translateY(-40px) rotateY(900deg) rotateX(-12deg);opacity:1}100%{transform:translateY(0) rotateY(1440deg) rotateX(0)}}
+@media(max-aspect-ratio:4/3){.main-copy{width:42%}.main-menu{left:4%;top:49%}.main-info-panel{left:27%;width:60%}}
+@media(prefers-reduced-motion:reduce){.coin-toss .coin{animation-duration:.25s}.front-start,.size-select>div>button{transition-duration:.01s}}
+
+/* 메인 일러스트 기반 전투 종료 화면 */
+.front-flow.result::before{background:rgb(2 10 18 / .68);backdrop-filter:blur(5px)}
+.front-result-card{position:absolute;left:50%;top:50%;width:min(470px,48%);padding:clamp(24px,2.4vw,42px);transform:translate(-50%,-50%);border:1px solid #8edff5;border-radius:16px;background:linear-gradient(145deg,#0b2434f2,#06131ef5);box-shadow:0 28px 100px #000e,0 0 38px #39bce84a;text-align:center}
+.front-result-card>small{color:#73ddfa;font-size:8px;font-weight:900;letter-spacing:.22em}.front-result-card h2{margin:6px 0 2px;font-size:clamp(30px,3.2vw,52px);letter-spacing:-.04em}.front-result-card>strong{display:block;color:#72e2ff;font-size:clamp(16px,1.5vw,25px)}.front-result-card.defeat>strong{color:#ff8d84}.front-result-card>p{margin:8px 0 22px;color:#c1d1d7;font-size:10px}
+.front-result-card>div{display:grid;grid-template-columns:1fr 1fr;gap:9px}.front-result-card button{min-height:68px;padding:11px;border-color:#395868;background:#0a1821e8;text-align:left}.front-result-card button.primary{border-color:#e6bd5f;background:linear-gradient(135deg,#e7c665,#b9832b);color:#10171b}.front-result-card button b,.front-result-card button span{display:block}.front-result-card button b{font-size:14px}.front-result-card button span{margin-top:3px;color:#9eb4bc;font-size:7px}.front-result-card button.primary span{color:#303322}
+@media(max-aspect-ratio:4/3){.front-result-card{width:min(620px,76%)}}
+
+/* 인게임과 동일한 16:9 전투 화면 안에서 수행하는 아군 배치 단계 */
+.game-shell[data-phase="배치"]{width:min(100vw,177.7778vh);height:min(100vh,56.25vw);min-height:0;overflow:hidden}
+.game-shell[data-phase="배치"] .battle-layout{position:absolute;inset:5.3% 0 0;display:block;width:100%;max-width:none;margin:0;padding:0}
+.game-shell[data-phase="배치"] .board-column{position:absolute;inset:0}
+.game-shell[data-phase="배치"] .left-rail,.game-shell[data-phase="배치"] .right-rail,.game-shell[data-phase="배치"] .board-tools,.game-shell[data-phase="배치"] .battle-message,.game-shell[data-phase="배치"] .mobile-time-dock,.game-shell[data-phase="배치"] .mobile-unit-dock,.game-shell[data-phase="배치"] .mobile-action-dock,.game-shell[data-phase="배치"] .mobile-execute-dock{display:none!important}
+.game-shell[data-phase="배치"] .board-stage{position:absolute;left:50%;top:50%;width:100%!important;height:auto!important;max-width:none;max-height:100%;aspect-ratio:1920/893;transform:translate(-50%,-50%);border-radius:0;overflow:hidden;box-shadow:none}
+.game-shell[data-phase="배치"] .board-stage::after{display:none}
+.deployment-dock{display:none}.game-shell[data-phase="배치"] .deployment-dock:not(.hidden){position:absolute;z-index:32;left:2%;right:2%;top:1.5%;bottom:auto;min-height:13%;padding:.55% .75%;display:grid;grid-template-columns:minmax(190px,1fr) minmax(360px,2fr) minmax(180px,.8fr);align-items:center;gap:1%;border:1px solid #41636f;border-left:4px solid #52d8ff;border-radius:13px;background:linear-gradient(100deg,#07131bea,#0d2530e6 55%,#071117ef);box-shadow:0 16px 45px #000b;backdrop-filter:blur(8px)}
+.deployment-heading small,.deployment-heading b,.deployment-heading span{display:block}.deployment-heading small{color:#5edcff;font-size:clamp(6px,.5vw,9px);font-weight:900;letter-spacing:.12em}.deployment-heading b{margin-top:4px;color:#eefcff;font-size:clamp(10px,1vw,18px)}.deployment-heading span{margin-top:5px;color:#9eb6bd;font-size:clamp(6px,.5vw,9px);line-height:1.45}
+.deployment-roster{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.deployment-roster>button{height:clamp(70px,7.4vw,124px);padding:4px 7px;display:grid;grid-template-columns:42% 1fr;align-items:center;text-align:left;border:1px solid #344d57;border-radius:9px;background:#0a171dcf}.deployment-roster>button:hover,.deployment-roster>button:focus-visible{border-color:#5edcff;background:#102c37}.deployment-roster>button.active{border-color:#6de2ff;background:linear-gradient(145deg,#123949,#0c222b);box-shadow:0 0 0 2px #68dcff55 inset,0 0 18px #36bce866}.deployment-roster img{width:100%;height:100%;object-fit:contain;object-position:center bottom;filter:drop-shadow(0 4px 4px #0009)}.deployment-roster span b,.deployment-roster span small{display:block}.deployment-roster span b{font-size:clamp(8px,.7vw,13px)}.deployment-roster span small{margin-top:4px;color:#91a8ae;font-size:clamp(5px,.42vw,8px);line-height:1.35}
+.deployment-confirm{display:flex;align-items:center;justify-content:flex-end;gap:10px}.deployment-confirm>span b,.deployment-confirm>span small{display:block;text-align:right}.deployment-confirm>span b{color:#6edcff;font-size:clamp(8px,.7vw,13px)}.deployment-confirm>span small{margin-top:3px;color:#889da3;font-size:clamp(5px,.42vw,8px)}.deployment-confirm>button{min-width:clamp(105px,9vw,165px);min-height:clamp(54px,5vw,86px);border-color:#f0cd71;background:linear-gradient(135deg,#c79c3f,#f2d47b);color:#1a1307;font-size:clamp(10px,.9vw,17px);font-weight:1000;box-shadow:0 0 24px #e7b94e55}
+.deployment-roster>button.unplaced{opacity:.68;filter:saturate(.55)}
+.deployment-roster>button.placed{border-color:#49cfff;box-shadow:inset 0 -3px 0 #49cfff55}
+.deployment-roster>button.placed small{color:#65dcff}
+.deployment-confirm>button:disabled{cursor:not-allowed;border-color:#59686c;background:#263337;color:#819195;box-shadow:none;opacity:.72}
+
+/* 환경설정은 배포판의 전투 이탈 메뉴로 단순화 */
+.pause-menu{display:grid;gap:10px}.pause-menu>p{margin:0 0 4px;color:#9fb2b8;font-size:10px}.pause-menu>button{min-height:76px;padding:14px 16px;text-align:left;border-radius:11px;background:#101d23}.pause-menu>button:hover,.pause-menu>button:focus-visible{border-color:#74d7ef;background:#142b35}.pause-menu strong,.pause-menu span{display:block}.pause-menu strong{font-size:16px}.pause-menu span{margin-top:5px;color:#91a6ac;font-size:8px}
+
+/* 화면 왼쪽 고서에 연결된 사각형 양피지 표식 */
+.mobile-time-dock{left:0!important;width:11.5%!important;min-width:138px;isolation:isolate;padding:clamp(12px,.85vw,16px) clamp(11px,.8vw,15px) clamp(14px,1vw,19px)}
+.mobile-time-dock::before{content:'';position:absolute;z-index:-2;inset:-7px 0 -10px -1px;background:radial-gradient(ellipse at 28% 18%,#d7bc8240 0 8%,transparent 32%),radial-gradient(ellipse at 62% 82%,#25150d55 0 7%,transparent 28%),repeating-linear-gradient(92deg,transparent 0 19px,#2e1b1017 20px 21px),linear-gradient(105deg,#3b2415 0 5%,#89683f 7%,#b39765 43%,#80603b 78%,#4a2e1b 100%);border-right:2px solid #c3a363;filter:drop-shadow(7px 9px 11px #000b)}
+.mobile-time-dock::after{content:'';position:absolute;z-index:-1;inset:-3px 4px -6px 0;border-left:6px solid #21140d;border-right:1px solid #e2c78966;background:linear-gradient(90deg,transparent 0 7px,#c3a36388 7px 9px,transparent 9px),linear-gradient(180deg,#e2c78966 0 1px,transparent 1px calc(100% - 2px),#382316aa calc(100% - 2px));box-shadow:inset 0 0 18px #2a180f55;pointer-events:none}
+.mobile-time-dock>.pocket-watch-wrap,.mobile-time-dock>.mini-time-gauge,.mobile-time-dock>.time-shard-count,.mobile-time-dock>.suppress-time{position:relative;z-index:1}
+.mobile-time-dock .watch-period{color:#fff0c7!important;text-shadow:0 2px 3px #21130e;font-weight:1000}
+.mobile-time-dock .mini-time-gauge{border-color:#d0ac62;background:#2b1b12;box-shadow:inset 0 1px 3px #000b,0 0 0 1px #2a180e}
+.mobile-time-dock .suppress-time{border-color:#b88f4e;background:linear-gradient(145deg,#392619f2,#17100cf2);box-shadow:0 5px 10px #1f100bb0,inset 0 1px #d2b06a33}
+
+/* 메인 화면 상세 안내 팝업 */
+.main-info-panel{left:22%;top:15%;width:min(920px,70%);max-height:78%;padding:clamp(14px,1.15vw,22px)}
+.main-info-panel>header{position:sticky;z-index:3;top:-22px;margin:-4px -4px 14px;padding:4px 4px 10px;background:linear-gradient(#0a2130 75%,transparent)}
+.main-info-panel>header b{font-size:clamp(17px,1.35vw,25px)}
+.main-character-list{display:flex!important;flex-direction:column;gap:10px}
+.main-info-panel .main-character-card{display:grid;grid-template-columns:clamp(90px,10vw,150px) minmax(0,1fr);gap:14px;padding:12px;border-color:#3d697b;background:linear-gradient(120deg,#0a1d27ed,#102d39e8)}
+.main-info-panel .main-character-card>img{width:100%;height:clamp(125px,13vw,190px);object-fit:contain;object-position:center bottom;align-self:center;filter:drop-shadow(0 7px 7px #0008)}
+.character-copy{min-width:0}.character-copy>header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding-bottom:8px;border-bottom:1px solid #ffffff1a}.character-copy>header span b{font-size:clamp(14px,1.05vw,20px)}.character-copy>header span small{margin-top:2px;color:#70dfff;font-size:clamp(7px,.6vw,11px)}.character-copy>header>em{color:#c5d8de;font-size:clamp(7px,.56vw,10px);font-style:normal;text-align:right}.character-copy>section{margin-top:8px;padding:8px 10px;border-left:3px solid #65d9f3;background:#07151dcc}.character-copy>section.skill{border-color:#c9a2ff;background:#151021c7}.character-copy section strong{color:#eefcff;font-size:clamp(9px,.72vw,13px)}.character-copy section p{margin:3px 0 0;color:#aebfc5;font-size:clamp(7px,.55vw,10px);line-height:1.45}.character-copy>.character-play,.character-copy>.character-caution{margin:7px 0 0;color:#c7d6da;font-size:clamp(7px,.58vw,10px);line-height:1.5}.character-copy>.character-play b{color:#6cdef8}.character-copy>.character-caution b{color:#f0c36d}
+.guide-intro{padding:14px;border:1px solid #3e6f81;border-left:4px solid #66dcf6;border-radius:9px;background:#081a25d9}.guide-intro-title small,.guide-detail-heading small{display:block;color:#65dfff;font-size:7px;font-weight:900;letter-spacing:.14em}.guide-intro-title b,.guide-detail-heading b{display:block;margin-top:3px;color:#f2fbff;font-size:14px}.guide-intro-title>p,.guide-detail-heading>p{margin:4px 0 0;color:#b9cdd2;font-size:8px;line-height:1.55}.guide-challenges{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:11px}.main-info-panel .guide-challenges article{display:grid;grid-template-columns:24px 1fr;gap:8px;padding:10px;border-color:#315665;background:linear-gradient(145deg,#0b202add,#0a1820e8)}.guide-challenges article>i{width:23px;height:23px;display:grid;place-items:center;border-radius:50%;background:#174152;color:#74e4fc;font-size:7px;font-style:normal;font-weight:1000}.guide-challenges article b{color:#f1fafb;font-size:10px}.guide-challenges article p{margin:4px 0 0;color:#bfd0d4;font-size:8px;line-height:1.55}.guide-detail-heading{margin:14px 2px 0;padding:0 2px 9px;border-bottom:1px solid #ffffff22}.guide-sections{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:10px}.main-info-panel .guide-sections article{display:grid;grid-template-columns:30px 1fr;gap:9px;padding:10px;border-color:#304e5b;background:#08171edb}.guide-sections article>i{width:28px;height:28px;display:grid;place-items:center;border-radius:50%;background:#163a49;color:#6fe1fa;font-size:8px;font-style:normal;font-weight:1000}.guide-sections article b{color:#f0f8f8;font-size:11px}.guide-sections article p{margin:4px 0 0;color:#afc2c7;font-size:8px;line-height:1.55}.guide-legend{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px;padding-top:10px;border-top:1px solid #ffffff20}.guide-legend span{padding:5px 8px;border:1px solid #3a5662;border-radius:999px;background:#09171e;color:#adbec3;font-size:7px}.guide-legend b{color:#eaf9fa}
+@media(max-aspect-ratio:4/3){.main-info-panel{left:17%;width:78%}.guide-challenges,.guide-sections{grid-template-columns:1fr}}
+
+/* 초심자용 시스템 가이드 */
+.guide-challenges{grid-template-columns:repeat(2,1fr)}
+.guide-sections article p strong{color:#d9f4fa}
+.guide-sections article p em{color:#77def5;font-style:normal;font-weight:800}
+@media(max-aspect-ratio:4/3){.guide-challenges,.guide-sections{grid-template-columns:1fr}}
+
+/* 고정 UI 전체 스케일링: 모바일에서도 1920×1080 배치를 그대로 유지 */
+.device-mode-modal{position:fixed;z-index:2000;inset:0;display:grid;place-items:center;padding:24px;background:rgb(2 7 11 / .78);backdrop-filter:blur(10px)}
+.device-mode-card{width:min(720px,88vw);padding:clamp(22px,2.2vw,38px);border:1px solid #6bcfe8;border-radius:18px;background:linear-gradient(145deg,#112a38f8,#07141dfb);box-shadow:0 30px 100px #000e,0 0 38px #37bce84d;color:#effbff}
+.device-mode-card>small{color:#69dcf7;font-size:10px;font-weight:900;letter-spacing:.18em}.device-mode-card h2{margin:5px 0 3px;font-size:clamp(24px,2.2vw,38px)}.device-mode-card>p{margin:0;color:#a9bec6;font-size:12px}
+.device-mode-card>div{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:24px}.device-mode-card button{min-height:150px;padding:20px;border-color:#3b6372;border-radius:14px;text-align:left;background:linear-gradient(145deg,#153747,#0a1c27)}.device-mode-card button:first-child{border-color:#68dff8;box-shadow:inset 0 0 22px #42c9ef1c}.device-mode-card button b,.device-mode-card button span{display:block}.device-mode-card button b{font-size:27px}.device-mode-card button span{margin-top:10px;color:#aac2ca;font-size:11px;line-height:1.5}
+
+html.mobile-device,
+html.mobile-device body,
+html.mobile-device #app{
+  width:100%;
+  height:100%;
+  min-width:0;
+  overflow:hidden;
+  overscroll-behavior:none;
+  background:#030608;
+}
+
+html.mobile-device .game-shell{
+  position:fixed!important;
+  left:50%!important;
+  top:var(--mobile-viewport-center-y,50%)!important;
+  width:var(--mobile-game-width,min(100vw,177.7778svh))!important;
+  height:var(--mobile-game-height,min(100svh,56.25vw))!important;
+  min-width:0!important;
+  min-height:0!important;
+  margin:auto!important;
+  overflow:hidden!important;
+  transform:translate(-50%,-50%)!important;
+}
+
+html.mobile-device .game-shell button,
+html.mobile-device .game-shell [role="button"]{
+  touch-action:manipulation;
+}
+
+/* 모바일 가로 화면에서 읽어야 하는 HUD만 확대하고 전투판 중앙은 유지 */
+html.mobile-device .game-header .title h1{font-size:20px}
+html.mobile-device .phase-badge b{font-size:15px}
+html.mobile-device .phase-badge span{font-size:12px}
+html.mobile-device .system-buttons button{width:44px;height:44px;font-size:15px}
+html.mobile-device .slot{width:92px;min-width:92px}
+html.mobile-device .slot i{font-size:11px}
+html.mobile-device .slot strong{font-size:13px}
+html.mobile-device .slot small{font-size:10px}
+html.mobile-device .reorder-toggle{flex-basis:92px;width:92px;font-size:11px}
+html.mobile-device .watch-period{font-size:13px}
+html.mobile-device .time-shard-count{font-size:11px}
+html.mobile-device .suppress-time{font-size:11px!important}
+html.mobile-device .suppress-time small{font-size:9px}
+html.mobile-device .mobile-unit-main>small{font-size:10px}
+html.mobile-device .mobile-unit-main>b{font-size:21px}
+html.mobile-device .mobile-unit-main p{font-size:11px}
+html.mobile-device .mobile-unit-main em{font-size:9px}
+html.mobile-device .mobile-card-prompt{font-size:9px!important}
+html.mobile-device .mobile-skill-detail header b{font-size:12px}
+html.mobile-device .mobile-skill-detail header small{font-size:8px}
+html.mobile-device .mobile-detail-action strong{font-size:11px}
+html.mobile-device .mobile-detail-action span{font-size:10px}
+html.mobile-device .mobile-detail-action small{font-size:9px}
+html.mobile-device .mobile-execute span{font-size:16px}
+html.mobile-device .mobile-execute small{font-size:10px}
+html.mobile-device .combat-button span{font-size:18px}
+html.mobile-device .combat-button small{font-size:10px}
+html.mobile-device .mobile-action-hint{font-size:10px}
+html.mobile-device .confirm-action{font-size:13px}
+html.mobile-device .main-menu>button{font-size:16px}
+html.mobile-device .front-fullscreen b{font-size:16px}
+html.mobile-device .front-fullscreen small{font-size:10px}
+
+/* 전체화면 모바일 메인 메뉴: 네 버튼을 화면 안에 고정 */
+html.mobile-device .main-menu{top:49%;gap:6px}
+html.mobile-device .main-menu>button{
+  min-height:48px;
+  max-height:48px;
+  padding:5px 16px;
+  font-size:14px;
+  line-height:1.15;
+}
+html.mobile-device .main-menu>.front-start{
+  min-height:74px;
+  max-height:74px;
+  padding:7px 17px;
+}
+html.mobile-device .main-menu>.front-fullscreen{
+  min-height:54px;
+  max-height:54px;
+}
+html.mobile-device .front-start b{font-size:22px}
+html.mobile-device .front-start span{font-size:8px}
+html.mobile-device .front-fullscreen b{font-size:14px}
+html.mobile-device .front-fullscreen small{font-size:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* 모바일 모드 전 화면 가독성: 중앙 말판을 건드리지 않고 HUD 내부만 조정 */
+html.mobile-device .timeline-wrap{min-height:0}
+html.mobile-device .slot-sd img{max-width:94%;max-height:100%}
+html.mobile-device .mobile-unit-portrait{width:31%;min-height:96px}
+html.mobile-device .mobile-action-dock{min-width:0}
+html.mobile-device .combat-button{min-height:78px;padding:8px 10px}
+html.mobile-device .combat-button i{font-size:28px}
+html.mobile-device .mobile-execute-dock{min-width:190px}
+html.mobile-device .time-guide-card{width:min(860px,82%);padding:20px}
+html.mobile-device .time-guide-card>p{font-size:12px}
+html.mobile-device .time-effect-grid article strong{font-size:14px}
+html.mobile-device .time-effect-grid article span{font-size:11px}
+html.mobile-device .time-effect-grid article em{font-size:10px}
+html.mobile-device .main-info-panel{width:min(1040px,76%)}
+html.mobile-device .guide-intro-title>p,
+html.mobile-device .guide-detail-heading>p,
+html.mobile-device .guide-challenges article p,
+html.mobile-device .guide-sections article p{font-size:10px}
+html.mobile-device .guide-challenges article b,
+html.mobile-device .guide-sections article b{font-size:12px}
+html.mobile-device .deployment-heading b{font-size:18px}
+html.mobile-device .deployment-heading span{font-size:9px}
+html.mobile-device .deployment-roster span b{font-size:13px}
+html.mobile-device .deployment-roster span small{font-size:8px}
+html.mobile-device .deployment-confirm>span b{font-size:13px}
+html.mobile-device .deployment-confirm>span small{font-size:8px}
+html.mobile-device .deployment-confirm>button{font-size:16px}
+
+/* 전체화면에서는 브라우저가 viewport 단위를 바꿀 수 있으므로 게임 프레임(cqw)을 기준으로 동일 크기를 유지 */
+@supports(width:1cqw){
+  html.mobile-device .game-shell{container-type:inline-size;container-name:game-frame}
+  html.mobile-device .game-header .title h1{font-size:1.05cqw}
+  html.mobile-device .phase-badge b{font-size:.78cqw}
+  html.mobile-device .phase-badge span{font-size:.63cqw}
+  html.mobile-device .system-buttons button{width:2.3cqw;height:2.3cqw;font-size:.78cqw}
+  html.mobile-device .slot{width:4.8cqw;min-width:4.8cqw}
+  html.mobile-device .slot i{width:.9cqw;height:.9cqw;font-size:.57cqw}
+  html.mobile-device .slot strong{font-size:.68cqw}
+  html.mobile-device .slot small{font-size:.52cqw}
+  html.mobile-device .reorder-toggle{flex-basis:4.8cqw;width:4.8cqw;margin-right:.5cqw;padding:.36cqw .26cqw;font-size:.57cqw}
+  html.mobile-device .reorder-toggle::before{margin-bottom:.26cqw;font-size:.74cqw}
+  html.mobile-device .mobile-time-dock{min-width:7.2cqw;padding:.72cqw .65cqw .85cqw}
+  html.mobile-device .mobile-watch{width:6.35cqw!important;--dial-radius:2.55cqw}
+  html.mobile-device .watch-period{font-size:.68cqw}
+  html.mobile-device .time-shard-count{font-size:.57cqw}
+  html.mobile-device .suppress-time{padding:.32cqw .26cqw!important;font-size:.57cqw!important}
+  html.mobile-device .suppress-time small{font-size:.47cqw}
+  html.mobile-device .mobile-unit-dock{gap:.45cqw;padding:.7cqw}
+  html.mobile-device .mobile-unit-portrait{min-height:5cqw}
+  html.mobile-device .mobile-unit-main>small{font-size:.52cqw}
+  html.mobile-device .mobile-unit-main>b{font-size:1.1cqw}
+  html.mobile-device .mobile-unit-main p{margin:.2cqw 0;font-size:.57cqw}
+  html.mobile-device .mobile-unit-main em{font-size:.47cqw}
+  html.mobile-device .mobile-card-prompt{font-size:.47cqw!important}
+  html.mobile-device .mobile-skill-detail{padding:.52cqw}
+  html.mobile-device .mobile-skill-detail header b{font-size:.63cqw}
+  html.mobile-device .mobile-skill-detail header small{font-size:.42cqw}
+  html.mobile-device .mobile-detail-action strong{font-size:.57cqw}
+  html.mobile-device .mobile-detail-action span{font-size:.52cqw}
+  html.mobile-device .mobile-detail-action small{font-size:.47cqw}
+  html.mobile-device .mobile-action-dock{gap:.36cqw;padding:.6cqw}
+  html.mobile-device .combat-button{min-height:4.1cqw;padding:.42cqw .52cqw}
+  html.mobile-device .combat-button i{font-size:1.45cqw;margin-right:.42cqw}
+  html.mobile-device .combat-button span{font-size:.94cqw}
+  html.mobile-device .combat-button small{font-size:.52cqw}
+  html.mobile-device .mobile-action-hint{font-size:.52cqw}
+  html.mobile-device .confirm-action{min-height:2.2cqw;font-size:.68cqw}
+  html.mobile-device .mobile-execute-dock{min-width:9.8cqw}
+  html.mobile-device .mobile-execute{padding:.52cqw}
+  html.mobile-device .mobile-execute span{font-size:.84cqw}
+  html.mobile-device .mobile-execute small{font-size:.52cqw}
+  html.mobile-device .main-menu{width:18cqw;gap:.32cqw}
+  html.mobile-device .main-menu>button{min-height:2.5cqw;max-height:2.5cqw;padding:.26cqw .84cqw;font-size:.74cqw}
+  html.mobile-device .main-menu>.front-start{min-height:3.85cqw;max-height:3.85cqw;padding:.36cqw .88cqw}
+  html.mobile-device .main-menu>.front-fullscreen{min-height:2.82cqw;max-height:2.82cqw}
+  html.mobile-device .front-start b{font-size:1.15cqw}
+  html.mobile-device .front-start span{font-size:.42cqw}
+  html.mobile-device .front-fullscreen b{font-size:.74cqw}
+  html.mobile-device .front-fullscreen small{font-size:.42cqw}
+  html.mobile-device .game-shell[data-phase="배치"] .deployment-dock:not(.hidden){grid-template-columns:26% 55% 17%;gap:1%;min-height:0;padding:.5cqw .65cqw}
+  html.mobile-device .deployment-heading{min-width:0}
+  html.mobile-device .deployment-heading small{font-size:.55cqw}
+  html.mobile-device .deployment-heading b{font-size:1.15cqw;line-height:1.25}
+  html.mobile-device .deployment-heading span{font-size:.52cqw}
+  html.mobile-device .deployment-roster{gap:.36cqw}
+  html.mobile-device .deployment-roster>button{height:6.8cqw;padding:.25cqw .36cqw;grid-template-columns:40% 1fr}
+  html.mobile-device .deployment-roster span b{font-size:.78cqw}
+  html.mobile-device .deployment-roster span small{margin-top:.2cqw;font-size:.5cqw}
+  html.mobile-device .deployment-confirm{min-width:0;flex-direction:column;align-items:stretch;gap:.35cqw}
+  html.mobile-device .deployment-confirm>span b{font-size:.67cqw;white-space:nowrap}
+  html.mobile-device .deployment-confirm>span small{font-size:.46cqw}
+  html.mobile-device .deployment-confirm>button{width:100%;min-width:0;min-height:2.7cqw;font-size:.72cqw}
+  html.mobile-device .time-guide-card>p{font-size:.63cqw}
+  html.mobile-device .time-effect-grid article strong{font-size:.74cqw}
+  html.mobile-device .time-effect-grid article span{font-size:.57cqw}
+  html.mobile-device .time-effect-grid article em{font-size:.52cqw}
+  html.mobile-device .guide-intro-title>p,
+  html.mobile-device .guide-detail-heading>p,
+  html.mobile-device .guide-challenges article p,
+  html.mobile-device .guide-sections article p{font-size:.52cqw}
+  html.mobile-device .guide-challenges article b,
+  html.mobile-device .guide-sections article b{font-size:.63cqw}
+}
+
+/* 모바일 HUD 120% 프리셋: PC 원본 기준 최종 120%, 확대 중첩 없음 */
+@supports(width:1cqw){
+  html.mobile-device .game-header{
+    height:7%;
+    min-height:0;
+    padding:clamp(3px,.38cqw,8px) 1.5cqw 0;
+  }
+  html.mobile-device .game-header .title h1{font-size:1.13cqw}
+  html.mobile-device .phase-badge{padding:.34cqw .56cqw}
+  html.mobile-device .phase-badge b{font-size:.75cqw}
+  html.mobile-device .phase-badge span{font-size:.63cqw}
+  html.mobile-device .system-buttons{gap:.36cqw}
+  html.mobile-device .system-buttons button{width:2.32cqw;height:2.32cqw;font-size:.75cqw}
+  html.mobile-device .timeline-wrap{
+    top:7%;
+    left:0;
+    right:0;
+    height:13%;
+    padding:.34cqw 11%;
+    overflow:visible;
+    background:#080d10f2!important;
+  }
+  html.mobile-device .timeline-background{display:none!important}
+  html.mobile-device .timeline{gap:.46cqw}
+  html.mobile-device .slot{width:5.05cqw;min-width:5.05cqw;height:96%;padding:0 .22cqw .27cqw}
+  html.mobile-device .slot i{width:.92cqw;height:.92cqw;font-size:.63cqw}
+  html.mobile-device .slot-sd{height:62%}
+  html.mobile-device .slot strong{font-size:.75cqw}
+  html.mobile-device .slot small{font-size:.56cqw}
+  html.mobile-device .reorder-toggle{flex-basis:5.05cqw;width:5.05cqw;height:96%;padding:.38cqw .29cqw;font-size:.63cqw}
+  html.mobile-device .reorder-toggle::before{font-size:.8cqw}
+  html.mobile-device .mobile-time-dock{width:10%!important;min-width:6.8cqw;padding:.7cqw .62cqw .8cqw}
+  html.mobile-device .mobile-watch{width:6.96cqw!important;--dial-radius:2.8cqw}
+  html.mobile-device .watch-period{font-size:.75cqw}
+  html.mobile-device .time-shard-count{font-size:.58cqw}
+  html.mobile-device .suppress-time{padding:.32cqw .27cqw!important;font-size:.56cqw!important}
+  html.mobile-device .suppress-time small{font-size:.46cqw}
+  html.mobile-device .mobile-unit-dock{width:27%;min-height:19%;gap:.5cqw;padding:.72cqw}
+  html.mobile-device .mobile-unit-portrait{width:31%;min-height:5.45cqw}
+  html.mobile-device .mobile-unit-main>small{font-size:.63cqw}
+  html.mobile-device .mobile-unit-main>b{font-size:1.32cqw}
+  html.mobile-device .mobile-unit-main p{margin:.24cqw 0;font-size:.69cqw}
+  html.mobile-device .mobile-unit-main em{font-size:.56cqw}
+  html.mobile-device .mobile-card-prompt{font-size:.56cqw!important}
+  html.mobile-device .mobile-skill-detail{padding:.62cqw}
+  html.mobile-device .mobile-skill-detail header b{font-size:.76cqw}
+  html.mobile-device .mobile-skill-detail header small{font-size:.5cqw}
+  html.mobile-device .mobile-detail-action strong{font-size:.69cqw}
+  html.mobile-device .mobile-detail-action span{font-size:.63cqw}
+  html.mobile-device .mobile-detail-action small{font-size:.56cqw}
+  html.mobile-device .mobile-action-dock{width:24%;gap:.4cqw;padding:.62cqw}
+  html.mobile-device .combat-button{min-height:4.48cqw;padding:.45cqw .56cqw}
+  html.mobile-device .combat-button i{font-size:1.56cqw;margin-right:.45cqw}
+  html.mobile-device .combat-button span{font-size:.94cqw}
+  html.mobile-device .combat-button small{font-size:.56cqw}
+  html.mobile-device .mobile-action-hint{font-size:.56cqw}
+  html.mobile-device .confirm-action{min-height:2.4cqw;font-size:.75cqw}
+  html.mobile-device .mobile-execute-dock{width:15.6%;min-width:10.4cqw}
+  html.mobile-device .mobile-execute{padding:.54cqw}
+  html.mobile-device .mobile-execute span{font-size:.75cqw}
+  html.mobile-device .mobile-execute small{font-size:.56cqw}
+  html.mobile-device .game-shell[data-phase="배치"] .deployment-dock:not(.hidden){top:2%;grid-template-columns:25% 56% 17%;gap:1%;padding:.75cqw .9cqw}
+  html.mobile-device .deployment-heading small{font-size:.58cqw}
+  html.mobile-device .deployment-heading b{font-size:1.12cqw}
+  html.mobile-device .deployment-heading span{font-size:.54cqw}
+  html.mobile-device .deployment-roster{gap:.54cqw}
+  html.mobile-device .deployment-roster>button{height:7.76cqw;padding:.29cqw .4cqw}
+  html.mobile-device .deployment-roster span b{font-size:.82cqw}
+  html.mobile-device .deployment-roster span small{font-size:.54cqw}
+  html.mobile-device .deployment-confirm{gap:.52cqw}
+  html.mobile-device .deployment-confirm>span b{font-size:.69cqw}
+  html.mobile-device .deployment-confirm>span small{font-size:.48cqw}
+  html.mobile-device .deployment-confirm>button{min-height:2.96cqw;font-size:.75cqw}
+}
+
+.rotate-device{display:none}
+
+@media(orientation:portrait){
+  html.touch-device .game-shell{visibility:hidden}
+  html.touch-device .device-mode-modal{visibility:hidden}
+  html.touch-device .rotate-device{
+    position:fixed;
+    z-index:1000;
+    inset:0;
+    display:grid;
+    place-items:center;
+    padding:24px;
+    background:radial-gradient(circle at 50% 42%,#173444,#05090c 68%);
+    color:#edfaff;
+    text-align:center;
+  }
+  html.touch-device .rotate-device>div{display:grid;justify-items:center;gap:9px}
+  html.touch-device .rotate-device span{
+    display:grid;
+    place-items:center;
+    width:72px;
+    height:72px;
+    border:2px solid #6ddaf5;
+    border-radius:50%;
+    color:#77e2fc;
+    font-size:42px;
+    line-height:1;
+    box-shadow:0 0 24px #43c8ee55;
+  }
+  html.touch-device .rotate-device b{font-size:20px}
+  html.touch-device .rotate-device small{color:#9fb5bd;font-size:11px;line-height:1.5}
+}
+
+/* 모드 선택 전 모바일 가로 화면 전용 선택창 */
+@media(orientation:landscape){
+  html.touch-device .device-mode-modal{
+    padding:max(10px,env(safe-area-inset-top)) max(14px,env(safe-area-inset-right)) max(10px,env(safe-area-inset-bottom)) max(14px,env(safe-area-inset-left));
+    background:#03090d;
+    backdrop-filter:none;
+  }
+  html.touch-device .device-mode-card{
+    width:min(680px,92vw);
+    max-height:calc(100svh - 20px);
+    padding:16px 20px;
+    overflow:auto;
+    border-radius:13px;
+  }
+  html.touch-device .device-mode-card>small{font-size:8px}
+  html.touch-device .device-mode-card h2{margin:3px 0;font-size:22px}
+  html.touch-device .device-mode-card>p{font-size:10px}
+  html.touch-device .device-mode-card>div{gap:10px;margin-top:14px}
+  html.touch-device .device-mode-card button{min-height:92px;padding:13px 15px;border-radius:10px}
+  html.touch-device .device-mode-card button b{font-size:21px}
+  html.touch-device .device-mode-card button span{margin-top:5px;font-size:9px}
+}
+
+@media(max-width:760px){
+  .device-mode-card{width:min(92vw,620px);padding:20px}
+  .device-mode-card>div{gap:10px;margin-top:18px}
+  .device-mode-card button{min-height:118px;padding:15px}
+  .device-mode-card button b{font-size:22px}
+  .device-mode-card button span{font-size:10px}
+}
+
+/* 최초 모바일 진입 화면: 세로 회전 안내와 가로 환경 선택을 모바일 우선으로 표시 */
+@media(orientation:portrait){
+  html.touch-device .rotate-device{
+    width:100dvw;
+    min-height:100dvh;
+    padding:max(24px,env(safe-area-inset-top)) max(22px,env(safe-area-inset-right)) max(24px,env(safe-area-inset-bottom)) max(22px,env(safe-area-inset-left));
+    background:radial-gradient(circle at 50% 38%,#173c4d 0,#07131a 48%,#020608 100%);
+  }
+  html.touch-device .rotate-device>div{
+    width:min(88vw,430px);
+    padding:28px 22px;
+    gap:14px;
+    border:1px solid #5fd6f0;
+    border-radius:22px;
+    background:linear-gradient(155deg,#102b38ee,#071319f5);
+    box-shadow:0 24px 70px #000c,0 0 32px #48ccea3d;
+  }
+  html.touch-device .rotate-device>div::before{
+    content:'MOBILE DISPLAY';
+    color:#6edff7;
+    font-size:11px;
+    font-weight:900;
+    letter-spacing:.18em;
+  }
+  html.touch-device .rotate-device span{
+    width:min(25vw,112px);
+    height:min(25vw,112px);
+    border-width:3px;
+    font-size:min(15vw,68px);
+  }
+  html.touch-device .rotate-device b{font-size:clamp(23px,6vw,31px);line-height:1.25}
+  html.touch-device .rotate-device small{max-width:310px;font-size:clamp(13px,3.5vw,17px);line-height:1.6}
+}
+
+@media(orientation:landscape){
+  html.touch-device .device-mode-modal:not(.hidden){
+    width:100dvw;
+    height:100dvh;
+    display:block;
+    padding:max(12px,env(safe-area-inset-top)) max(18px,env(safe-area-inset-right)) max(12px,env(safe-area-inset-bottom)) max(18px,env(safe-area-inset-left));
+    overflow:hidden;
+    background:radial-gradient(circle at 26% 35%,#153a4a 0,#07151d 42%,#020608 100%);
+  }
+  html.touch-device .device-mode-card{
+    width:100%;
+    height:100%;
+    max-height:none;
+    padding:clamp(14px,3vh,24px) clamp(18px,4vw,38px);
+    display:grid;
+    grid-template-rows:auto auto auto minmax(0,1fr);
+    align-content:center;
+    overflow:hidden;
+    border:1px solid #4bbbd4;
+    border-radius:16px;
+    background:linear-gradient(120deg,#0d2632f2,#07141cf8);
+  }
+  html.touch-device .device-mode-card>small{font-size:clamp(8px,1.7vh,11px)}
+  html.touch-device .device-mode-card h2{margin:2px 0;font-size:clamp(20px,4.7vh,32px)}
+  html.touch-device .device-mode-card>p{font-size:clamp(10px,2.4vh,15px)}
+  html.touch-device .device-mode-card>div{
+    min-height:0;
+    margin-top:clamp(10px,2.6vh,20px);
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:clamp(10px,2vw,18px);
+  }
+  html.touch-device .device-mode-card button{
+    min-height:0;
+    height:100%;
+    padding:clamp(13px,3vh,24px);
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    border-width:2px;
+    border-radius:14px;
+  }
+  html.touch-device .device-mode-card button::before{
+    display:block;
+    margin-bottom:clamp(5px,1.5vh,12px);
+    color:#72e2fa;
+    font-size:clamp(20px,6vh,42px);
+    line-height:1;
+  }
+  html.touch-device .device-mode-card button[data-display-mode="mobile"]::before{content:'▣'}
+  html.touch-device .device-mode-card button[data-display-mode="pc"]::before{content:'⌨';color:#d6c488}
+  html.touch-device .device-mode-card button b{font-size:clamp(19px,4.8vh,31px)}
+  html.touch-device .device-mode-card button span{margin-top:clamp(4px,1.2vh,9px);font-size:clamp(9px,2.4vh,14px)}
+}
+
+/* 모바일 전투 HUD 최종 정렬: 배경 레이어와 말판 좌표는 분리하고 UI 비율만 통일한다. */
+@media(orientation:landscape){
+  @supports(width:1cqw){
+    html.mobile-device .game-header{
+      height:7%;
+      padding:.42cqw 1.35cqw 0;
+      overflow:visible;
+    }
+    html.mobile-device .game-header .title h1{font-size:1.12cqw;line-height:1.2}
+    html.mobile-device .phase-badge b{font-size:.82cqw;line-height:1.15}
+    html.mobile-device .phase-badge span{font-size:.62cqw;line-height:1.15}
+    html.mobile-device .system-buttons button{width:2.45cqw;height:2.45cqw;font-size:.82cqw}
+
+    html.mobile-device .timeline-wrap{
+      top:7%;
+      height:14%;
+      padding:.55cqw 10.5% .34cqw;
+      overflow:hidden;
+      background:transparent!important;
+    }
+    html.mobile-device .timeline-wrap::before{
+      content:'';
+      position:absolute;
+      z-index:0;
+      inset:0;
+      pointer-events:none;
+      background:linear-gradient(180deg,rgb(3 9 12 / .1),rgb(3 9 12 / .3));
+    }
+    html.mobile-device .timeline{height:100%;gap:.48cqw;align-items:flex-start}
+    html.mobile-device .slot{
+      width:5.25cqw;
+      min-width:5.25cqw;
+      height:94%;
+      padding:0 .26cqw .3cqw;
+    }
+    html.mobile-device .slot i{width:1.05cqw;height:1.05cqw;font-size:.66cqw}
+    html.mobile-device .slot-sd{height:61%}
+    html.mobile-device .slot strong{font-size:.82cqw;line-height:1.1}
+    html.mobile-device .slot small{font-size:.62cqw;line-height:1.1}
+    html.mobile-device .reorder-toggle{
+      flex-basis:5.25cqw;
+      width:5.25cqw;
+      height:94%;
+      padding:.38cqw .3cqw;
+      font-size:.65cqw;
+    }
+    html.mobile-device .reorder-toggle::before{font-size:.92cqw}
+
+    html.mobile-device .mobile-time-dock{
+      left:0;
+      top:3.2%;
+      width:15%!important;
+      min-width:0;
+      padding:.72cqw 1.05cqw .82cqw .8cqw;
+    }
+    html.mobile-device .mobile-watch{width:7.15cqw!important;--dial-radius:2.88cqw}
+    html.mobile-device .watch-period{font-size:.78cqw}
+    html.mobile-device .time-shard-count{font-size:.64cqw}
+    html.mobile-device .suppress-time{font-size:.64cqw!important}
+    html.mobile-device .suppress-time small{font-size:.52cqw}
+
+    html.mobile-device .mobile-unit-dock{
+      width:26%;
+      min-height:0;
+      height:17.5%;
+      gap:.52cqw;
+      padding:.62cqw .72cqw;
+    }
+    html.mobile-device .mobile-unit-portrait{width:29%;height:100%;min-height:0}
+    html.mobile-device .mobile-unit-main>small{font-size:.65cqw;line-height:1.15}
+    html.mobile-device .mobile-unit-main>b{font-size:1.2cqw;line-height:1.15}
+    html.mobile-device .mobile-unit-main p{margin:.2cqw 0;font-size:.7cqw;line-height:1.2}
+    html.mobile-device .mobile-unit-main em{font-size:.58cqw}
+    html.mobile-device .mobile-card-prompt{font-size:.54cqw!important;line-height:1.2}
+
+    html.mobile-device .mobile-action-dock{
+      width:24%;
+      gap:.42cqw;
+      padding:.62cqw;
+    }
+    html.mobile-device .mobile-action-buttons{gap:.42cqw}
+    html.mobile-device .combat-button{
+      min-height:4.35cqw;
+      padding:.48cqw .58cqw;
+      grid-template-columns:auto 1fr;
+    }
+    html.mobile-device .combat-button i{font-size:1.5cqw;margin-right:.46cqw}
+    html.mobile-device .combat-button span{font-size:.96cqw;line-height:1.1}
+    html.mobile-device .combat-button small{font-size:.62cqw;line-height:1.1}
+    html.mobile-device .mobile-action-hint{font-size:.58cqw;line-height:1.3}
+    html.mobile-device .confirm-action{min-height:2.45cqw;font-size:.78cqw}
+
+    html.mobile-device .mobile-execute-dock{width:15.6%;min-width:0;gap:.42cqw}
+    html.mobile-device .mobile-execute{
+      min-height:3.05cqw;
+      padding:.56cqw;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+    }
+    html.mobile-device .mobile-execute span{font-size:1cqw;line-height:1.1}
+    html.mobile-device .mobile-reset-plans{min-height:2.35cqw;font-size:.72cqw}
+  }
+}

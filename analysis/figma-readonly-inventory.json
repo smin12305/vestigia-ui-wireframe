@@ -1,0 +1,1095 @@
+[
+  {
+    "id": "1:245",
+    "name": "전투 메인 화면",
+    "children": [
+      {
+        "id": "6:235",
+        "name": "배경 이미지",
+        "visible": true
+      },
+      {
+        "id": "10:1699",
+        "name": "6x6 격자 보드",
+        "visible": true
+      },
+      {
+        "id": "1:609",
+        "name": "레이아웃",
+        "visible": true
+      },
+      {
+        "id": "8:1464",
+        "name": "TURN",
+        "visible": true
+      },
+      {
+        "id": "7:3366",
+        "name": "일시정지 버튼",
+        "visible": true
+      },
+      {
+        "id": "7:3367",
+        "name": "설정 버튼",
+        "visible": true
+      },
+      {
+        "id": "10:1704",
+        "name": "캐릭터 행동 버튼 영역",
+        "visible": true
+      },
+      {
+        "id": "7:3489",
+        "name": "시간대 변경 시계",
+        "visible": true
+      },
+      {
+        "id": "10:1703",
+        "name": "시간대 변경 시계 활성화 레이어",
+        "visible": false
+      },
+      {
+        "id": "17:3056",
+        "name": "캐릭터 턴 순서 변경 영역",
+        "visible": true
+      },
+      {
+        "id": "10:1708",
+        "name": "턴 설계 버튼 영역",
+        "visible": true
+      },
+      {
+        "id": "10:1697",
+        "name": "토스트 팝업",
+        "visible": false
+      }
+    ],
+    "links": [
+      {
+        "id": "13:2738",
+        "name": "SD 캐릭터",
+        "reactions": [
+          {
+            "action": {
+              "type": "NODE",
+              "destinationId": "32:1260",
+              "navigation": "NAVIGATE",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetInteractiveComponents": false
+            },
+            "actions": [
+              {
+                "type": "NODE",
+                "destinationId": "32:1260",
+                "navigation": "NAVIGATE",
+                "transition": null,
+                "resetVideoPosition": false,
+                "resetInteractiveComponents": false
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ]
+      },
+      {
+        "id": "10:1748",
+        "name": "아군 캐릭터 1번",
+        "reactions": [
+          {
+            "action": {
+              "type": "NODE",
+              "destinationId": "17:3572",
+              "navigation": "NAVIGATE",
+              "transition": {
+                "type": "SMART_ANIMATE",
+                "easing": {
+                  "type": "EASE_OUT"
+                },
+                "duration": 0.30000001192092896
+              },
+              "resetVideoPosition": false
+            },
+            "actions": [
+              {
+                "type": "NODE",
+                "destinationId": "17:3572",
+                "navigation": "NAVIGATE",
+                "transition": {
+                  "type": "SMART_ANIMATE",
+                  "easing": {
+                    "type": "EASE_OUT"
+                  },
+                  "duration": 0.30000001192092896
+                },
+                "resetVideoPosition": false
+              }
+            ],
+            "trigger": {
+              "type": "ON_DRAG"
+            }
+          }
+        ]
+      },
+      {
+        "id": "10:1705",
+        "name": "작전 개시 버튼",
+        "reactions": [
+          {
+            "action": {
+              "type": "NODE",
+              "destinationId": "17:3057",
+              "navigation": "NAVIGATE",
+              "transition": null,
+              "resetVideoPosition": false
+            },
+            "actions": [
+              {
+                "type": "NODE",
+                "destinationId": "17:3057",
+                "navigation": "NAVIGATE",
+                "transition": null,
+                "resetVideoPosition": false
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ]
+      }
+    ],
+    "hidden": [
+      {
+        "id": "12:2419",
+        "name": "시계 게이지 2번째 칸"
+      },
+      {
+        "id": "10:1703",
+        "name": "시간대 변경 시계 활성화 레이어"
+      },
+      {
+        "id": "10:1697",
+        "name": "토스트 팝업"
+      }
+    ]
+  },
+  {
+    "id": "32:1260",
+    "name": "적군 캐릭터 선택",
+    "children": [
+      {
+        "id": "32:1261",
+        "name": "배경 이미지",
+        "visible": true
+      },
+      {
+        "id": "32:1262",
+        "name": "6x6 격자 보드",
+        "visible": true
+      },
+      {
+        "id": "32:1281",
+        "name": "레이아웃",
+        "visible": true
+      },
+      {
+        "id": "32:1292",
+        "name": "TURN",
+        "visible": true
+      },
+      {
+        "id": "32:1293",
+        "name": "일시정지 버튼",
+        "visible": true
+      },
+      {
+        "id": "32:1294",
+        "name": "설정 버튼",
+        "visible": true
+      },
+      {
+        "id": "32:1295",
+        "name": "캐릭터 행동 버튼 영역",
+        "visible": true
+      },
+      {
+        "id": "32:1298",
+        "name": "시간대 변경 시계",
+        "visible": true
+      },
+      {
+        "id": "32:1305",
+        "name": "시간대 변경 시계 활성화 레이어",
+        "visible": false
+      },
+      {
+        "id": "32:1315",
+        "name": "캐릭터 턴 순서 변경 영역",
+        "visible": true
+      },
+      {
+        "id": "32:1364",
+        "name": "턴 설계 버튼 영역",
+        "visible": true
+      },
+      {
+        "id": "32:1380",
+        "name": "토스트 팝업",
+        "visible": false
+      }
+    ],
+    "links": [
+      {
+        "id": "32:1436",
+        "name": "상세 정보 보기 버튼",
+        "reactions": [
+          {
+            "action": {
+              "type": "NODE",
+              "destinationId": "32:1672",
+              "navigation": "NAVIGATE",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetInteractiveComponents": false
+            },
+            "actions": [
+              {
+                "type": "NODE",
+                "destinationId": "32:1672",
+                "navigation": "NAVIGATE",
+                "transition": null,
+                "resetVideoPosition": false,
+                "resetInteractiveComponents": false
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ]
+      }
+    ],
+    "hidden": [
+      {
+        "id": "32:1304",
+        "name": "시계 게이지 2번째 칸"
+      },
+      {
+        "id": "32:1305",
+        "name": "시간대 변경 시계 활성화 레이어"
+      },
+      {
+        "id": "32:1380",
+        "name": "토스트 팝업"
+      }
+    ]
+  },
+  {
+    "id": "32:1672",
+    "name": "적 캐릭터 정보 열람",
+    "children": [
+      {
+        "id": "100:976",
+        "name": "6x6 격자 보드",
+        "visible": true
+      },
+      {
+        "id": "32:1699",
+        "name": "레이아웃",
+        "visible": true
+      },
+      {
+        "id": "100:804",
+        "name": "캐릭터 정보 팝업",
+        "visible": true
+      },
+      {
+        "id": "102:1704",
+        "name": "TURN",
+        "visible": true
+      },
+      {
+        "id": "32:1711",
+        "name": "일시정지 버튼",
+        "visible": true
+      },
+      {
+        "id": "32:1712",
+        "name": "설정 버튼",
+        "visible": true
+      }
+    ],
+    "links": [],
+    "hidden": [
+      {
+        "id": "100:865",
+        "name": "번호"
+      },
+      {
+        "id": "100:873",
+        "name": "번호"
+      },
+      {
+        "id": "100:881",
+        "name": "번호"
+      },
+      {
+        "id": "100:890",
+        "name": "번호"
+      },
+      {
+        "id": "100:898",
+        "name": "번호"
+      },
+      {
+        "id": "100:906",
+        "name": "번호"
+      }
+    ]
+  },
+  {
+    "id": "20:285",
+    "name": "전투 메인 화면",
+    "children": [
+      {
+        "id": "20:286",
+        "name": "배경 이미지",
+        "visible": true
+      },
+      {
+        "id": "20:287",
+        "name": "6x6 격자 보드",
+        "visible": true
+      },
+      {
+        "id": "20:306",
+        "name": "레이아웃",
+        "visible": true
+      },
+      {
+        "id": "20:317",
+        "name": "TURN",
+        "visible": true
+      },
+      {
+        "id": "20:318",
+        "name": "일시정지 버튼",
+        "visible": true
+      },
+      {
+        "id": "20:319",
+        "name": "설정 버튼",
+        "visible": true
+      },
+      {
+        "id": "20:320",
+        "name": "캐릭터 행동 버튼 영역",
+        "visible": true
+      },
+      {
+        "id": "20:334",
+        "name": "시간대 변경 시계",
+        "visible": true
+      },
+      {
+        "id": "20:341",
+        "name": "시간대 변경 시계 활성화 레이어",
+        "visible": false
+      },
+      {
+        "id": "20:351",
+        "name": "캐릭터 턴 순서 변경 영역",
+        "visible": true
+      },
+      {
+        "id": "20:400",
+        "name": "턴 설계 버튼 영역",
+        "visible": true
+      },
+      {
+        "id": "20:416",
+        "name": "토스트 팝업",
+        "visible": false
+      }
+    ],
+    "links": [],
+    "hidden": [
+      {
+        "id": "20:340",
+        "name": "시계 게이지 2번째 칸"
+      },
+      {
+        "id": "20:341",
+        "name": "시간대 변경 시계 활성화 레이어"
+      },
+      {
+        "id": "20:416",
+        "name": "토스트 팝업"
+      }
+    ]
+  },
+  {
+    "id": "17:3572",
+    "name": "캐릭터 턴 순서 변경 (1)",
+    "children": [
+      {
+        "id": "17:3573",
+        "name": "배경 이미지",
+        "visible": true
+      },
+      {
+        "id": "17:3574",
+        "name": "6x6 격자 보드",
+        "visible": true
+      },
+      {
+        "id": "17:3593",
+        "name": "레이아웃",
+        "visible": true
+      },
+      {
+        "id": "17:3604",
+        "name": "TURN",
+        "visible": true
+      },
+      {
+        "id": "17:3605",
+        "name": "일시정지 버튼",
+        "visible": true
+      },
+      {
+        "id": "17:3606",
+        "name": "설정 버튼",
+        "visible": true
+      },
+      {
+        "id": "17:3607",
+        "name": "캐릭터 행동 버튼 영역",
+        "visible": true
+      },
+      {
+        "id": "17:3621",
+        "name": "시간대 변경 시계",
+        "visible": true
+      },
+      {
+        "id": "17:3628",
+        "name": "시간대 변경 시계 활성화 레이어",
+        "visible": false
+      },
+      {
+        "id": "17:3638",
+        "name": "캐릭터 턴 순서 변경 영역",
+        "visible": true
+      },
+      {
+        "id": "17:3687",
+        "name": "턴 설계 버튼 영역",
+        "visible": true
+      },
+      {
+        "id": "17:3703",
+        "name": "토스트 팝업",
+        "visible": false
+      }
+    ],
+    "links": [
+      {
+        "id": "17:4156",
+        "name": "아군 캐릭터 1번",
+        "reactions": [
+          {
+            "action": {
+              "type": "NODE",
+              "destinationId": "17:3572",
+              "navigation": "NAVIGATE",
+              "transition": {
+                "type": "SMART_ANIMATE",
+                "easing": {
+                  "type": "EASE_OUT"
+                },
+                "duration": 0.30000001192092896
+              },
+              "resetVideoPosition": false
+            },
+            "actions": [
+              {
+                "type": "NODE",
+                "destinationId": "17:3572",
+                "navigation": "NAVIGATE",
+                "transition": {
+                  "type": "SMART_ANIMATE",
+                  "easing": {
+                    "type": "EASE_OUT"
+                  },
+                  "duration": 0.30000001192092896
+                },
+                "resetVideoPosition": false
+              }
+            ],
+            "trigger": {
+              "type": "ON_DRAG"
+            }
+          }
+        ]
+      }
+    ],
+    "hidden": [
+      {
+        "id": "17:3627",
+        "name": "시계 게이지 2번째 칸"
+      },
+      {
+        "id": "17:3628",
+        "name": "시간대 변경 시계 활성화 레이어"
+      },
+      {
+        "id": "17:3703",
+        "name": "토스트 팝업"
+      }
+    ]
+  },
+  {
+    "id": "17:3792",
+    "name": "캐릭터 턴 순서 변경 (2)",
+    "children": [
+      {
+        "id": "17:3793",
+        "name": "배경 이미지",
+        "visible": true
+      },
+      {
+        "id": "17:3794",
+        "name": "6x6 격자 보드",
+        "visible": true
+      },
+      {
+        "id": "17:3813",
+        "name": "레이아웃",
+        "visible": true
+      },
+      {
+        "id": "17:3824",
+        "name": "TURN",
+        "visible": true
+      },
+      {
+        "id": "17:3825",
+        "name": "일시정지 버튼",
+        "visible": true
+      },
+      {
+        "id": "17:3826",
+        "name": "설정 버튼",
+        "visible": true
+      },
+      {
+        "id": "17:3827",
+        "name": "캐릭터 행동 버튼 영역",
+        "visible": true
+      },
+      {
+        "id": "17:3841",
+        "name": "시간대 변경 시계",
+        "visible": true
+      },
+      {
+        "id": "17:3848",
+        "name": "시간대 변경 시계 활성화 레이어",
+        "visible": false
+      },
+      {
+        "id": "17:3858",
+        "name": "캐릭터 턴 순서 변경 영역",
+        "visible": true
+      },
+      {
+        "id": "17:3907",
+        "name": "턴 설계 버튼 영역",
+        "visible": true
+      },
+      {
+        "id": "17:3923",
+        "name": "토스트 팝업",
+        "visible": false
+      }
+    ],
+    "links": [],
+    "hidden": [
+      {
+        "id": "17:3847",
+        "name": "시계 게이지 2번째 칸"
+      },
+      {
+        "id": "17:3848",
+        "name": "시간대 변경 시계 활성화 레이어"
+      },
+      {
+        "id": "17:3923",
+        "name": "토스트 팝업"
+      }
+    ]
+  },
+  {
+    "id": "17:3057",
+    "name": "시간대 변경 활성화 (1)",
+    "children": [
+      {
+        "id": "17:3058",
+        "name": "배경 이미지",
+        "visible": true
+      },
+      {
+        "id": "17:3059",
+        "name": "6x6 격자 보드",
+        "visible": true
+      },
+      {
+        "id": "17:3078",
+        "name": "레이아웃",
+        "visible": true
+      },
+      {
+        "id": "17:3089",
+        "name": "TURN",
+        "visible": true
+      },
+      {
+        "id": "17:3090",
+        "name": "일시정지 버튼",
+        "visible": true
+      },
+      {
+        "id": "17:3091",
+        "name": "설정 버튼",
+        "visible": true
+      },
+      {
+        "id": "17:3092",
+        "name": "캐릭터 행동 버튼 영역",
+        "visible": true
+      },
+      {
+        "id": "17:3106",
+        "name": "시간대 변경 시계",
+        "visible": true
+      },
+      {
+        "id": "17:3113",
+        "name": "시간대 변경 시계 활성화 레이어",
+        "visible": true
+      },
+      {
+        "id": "17:3123",
+        "name": "캐릭터 턴 순서 변경 영역",
+        "visible": true
+      },
+      {
+        "id": "17:3172",
+        "name": "턴 설계 버튼 영역",
+        "visible": true
+      },
+      {
+        "id": "17:3188",
+        "name": "토스트 팝업",
+        "visible": true
+      }
+    ],
+    "links": [],
+    "hidden": []
+  },
+  {
+    "id": "17:3227",
+    "name": "시간대 변경 활성화 (2)",
+    "children": [
+      {
+        "id": "17:3228",
+        "name": "배경 이미지",
+        "visible": true
+      },
+      {
+        "id": "17:3229",
+        "name": "6x6 격자 보드",
+        "visible": true
+      },
+      {
+        "id": "17:3248",
+        "name": "레이아웃",
+        "visible": true
+      },
+      {
+        "id": "17:3259",
+        "name": "TURN",
+        "visible": true
+      },
+      {
+        "id": "17:3260",
+        "name": "일시정지 버튼",
+        "visible": true
+      },
+      {
+        "id": "17:3261",
+        "name": "설정 버튼",
+        "visible": true
+      },
+      {
+        "id": "17:3262",
+        "name": "캐릭터 행동 버튼 영역",
+        "visible": true
+      },
+      {
+        "id": "17:3276",
+        "name": "시간대 변경 시계",
+        "visible": true
+      },
+      {
+        "id": "17:3283",
+        "name": "시간대 변경 시계 활성화 레이어",
+        "visible": true
+      },
+      {
+        "id": "17:3293",
+        "name": "캐릭터 턴 순서 변경 영역",
+        "visible": true
+      },
+      {
+        "id": "17:3342",
+        "name": "턴 설계 버튼 영역",
+        "visible": true
+      },
+      {
+        "id": "17:3358",
+        "name": "토스트 팝업",
+        "visible": false
+      }
+    ],
+    "links": [],
+    "hidden": [
+      {
+        "id": "17:3358",
+        "name": "토스트 팝업"
+      }
+    ]
+  },
+  {
+    "id": "17:3399",
+    "name": "시간대 변경 활성화 (3)",
+    "children": [
+      {
+        "id": "17:3400",
+        "name": "배경 이미지",
+        "visible": true
+      },
+      {
+        "id": "17:3401",
+        "name": "6x6 격자 보드",
+        "visible": true
+      },
+      {
+        "id": "17:3420",
+        "name": "레이아웃",
+        "visible": true
+      },
+      {
+        "id": "17:3431",
+        "name": "TURN",
+        "visible": true
+      },
+      {
+        "id": "17:3432",
+        "name": "일시정지 버튼",
+        "visible": true
+      },
+      {
+        "id": "17:3433",
+        "name": "설정 버튼",
+        "visible": true
+      },
+      {
+        "id": "17:3434",
+        "name": "캐릭터 행동 버튼 영역",
+        "visible": true
+      },
+      {
+        "id": "17:3448",
+        "name": "시간대 변경 시계",
+        "visible": true
+      },
+      {
+        "id": "17:3455",
+        "name": "시간대 변경 시계 활성화 레이어",
+        "visible": true
+      },
+      {
+        "id": "17:3465",
+        "name": "캐릭터 턴 순서 변경 영역",
+        "visible": true
+      },
+      {
+        "id": "17:3514",
+        "name": "턴 설계 버튼 영역",
+        "visible": true
+      },
+      {
+        "id": "17:3530",
+        "name": "토스트 팝업",
+        "visible": false
+      }
+    ],
+    "links": [],
+    "hidden": [
+      {
+        "id": "17:3530",
+        "name": "토스트 팝업"
+      }
+    ]
+  },
+  {
+    "id": "13:2853",
+    "name": "아군 캐릭터 정보 열람",
+    "children": [
+      {
+        "id": "100:1090",
+        "name": "6x6 격자 보드",
+        "visible": true
+      },
+      {
+        "id": "13:2874",
+        "name": "레이아웃",
+        "visible": true
+      },
+      {
+        "id": "17:3024",
+        "name": "캐릭터 정보 팝업",
+        "visible": true
+      },
+      {
+        "id": "13:2885",
+        "name": "TURN",
+        "visible": true
+      },
+      {
+        "id": "13:2886",
+        "name": "일시정지 버튼",
+        "visible": true
+      },
+      {
+        "id": "13:2887",
+        "name": "설정 버튼",
+        "visible": true
+      }
+    ],
+    "links": [],
+    "hidden": [
+      {
+        "id": "100:771",
+        "name": "태그에 대한 설명"
+      },
+      {
+        "id": "100:677",
+        "name": "번호"
+      },
+      {
+        "id": "100:685",
+        "name": "번호"
+      },
+      {
+        "id": "100:693",
+        "name": "번호"
+      },
+      {
+        "id": "20:991",
+        "name": "번호"
+      },
+      {
+        "id": "20:1007",
+        "name": "번호"
+      },
+      {
+        "id": "20:1023",
+        "name": "번호"
+      }
+    ]
+  },
+  {
+    "id": "102:1771",
+    "name": "아군 캐릭터 정보 열람 (각성 버전)",
+    "children": [
+      {
+        "id": "102:1772",
+        "name": "6x6 격자 보드",
+        "visible": true
+      },
+      {
+        "id": "102:1792",
+        "name": "레이아웃",
+        "visible": true
+      },
+      {
+        "id": "102:1803",
+        "name": "캐릭터 정보 팝업",
+        "visible": true
+      },
+      {
+        "id": "102:1886",
+        "name": "TURN",
+        "visible": true
+      },
+      {
+        "id": "102:1887",
+        "name": "일시정지 버튼",
+        "visible": true
+      },
+      {
+        "id": "102:1888",
+        "name": "설정 버튼",
+        "visible": true
+      }
+    ],
+    "links": [],
+    "hidden": [
+      {
+        "id": "102:1816",
+        "name": "태그에 대한 설명"
+      },
+      {
+        "id": "102:1842",
+        "name": "번호"
+      },
+      {
+        "id": "102:1850",
+        "name": "번호"
+      },
+      {
+        "id": "102:1858",
+        "name": "번호"
+      },
+      {
+        "id": "102:1867",
+        "name": "번호"
+      },
+      {
+        "id": "102:1875",
+        "name": "번호"
+      },
+      {
+        "id": "102:1883",
+        "name": "번호"
+      }
+    ]
+  },
+  {
+    "id": "20:786",
+    "name": "아군 캐릭터 선택",
+    "children": [
+      {
+        "id": "20:787",
+        "name": "배경 이미지",
+        "visible": true
+      },
+      {
+        "id": "20:788",
+        "name": "6x6 격자 보드",
+        "visible": true
+      },
+      {
+        "id": "20:807",
+        "name": "레이아웃",
+        "visible": true
+      },
+      {
+        "id": "20:818",
+        "name": "TURN",
+        "visible": true
+      },
+      {
+        "id": "20:819",
+        "name": "일시정지 버튼",
+        "visible": true
+      },
+      {
+        "id": "20:820",
+        "name": "설정 버튼",
+        "visible": true
+      },
+      {
+        "id": "20:821",
+        "name": "캐릭터 행동 버튼 영역",
+        "visible": true
+      },
+      {
+        "id": "20:824",
+        "name": "시간대 변경 시계",
+        "visible": true
+      },
+      {
+        "id": "20:831",
+        "name": "시간대 변경 시계 활성화 레이어",
+        "visible": false
+      },
+      {
+        "id": "20:841",
+        "name": "캐릭터 턴 순서 변경 영역",
+        "visible": true
+      },
+      {
+        "id": "20:890",
+        "name": "턴 설계 버튼 영역",
+        "visible": true
+      },
+      {
+        "id": "20:906",
+        "name": "토스트 팝업",
+        "visible": false
+      }
+    ],
+    "links": [
+      {
+        "id": "20:1113",
+        "name": "상세 정보 보기 버튼",
+        "reactions": [
+          {
+            "action": {
+              "type": "NODE",
+              "destinationId": "13:2853",
+              "navigation": "NAVIGATE",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetInteractiveComponents": false
+            },
+            "actions": [
+              {
+                "type": "NODE",
+                "destinationId": "13:2853",
+                "navigation": "NAVIGATE",
+                "transition": null,
+                "resetVideoPosition": false,
+                "resetInteractiveComponents": false
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ]
+      }
+    ],
+    "hidden": [
+      {
+        "id": "20:830",
+        "name": "시계 게이지 2번째 칸"
+      },
+      {
+        "id": "20:831",
+        "name": "시간대 변경 시계 활성화 레이어"
+      },
+      {
+        "id": "20:906",
+        "name": "토스트 팝업"
+      }
+    ]
+  }
+]

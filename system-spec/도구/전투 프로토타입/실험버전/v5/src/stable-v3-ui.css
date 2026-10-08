@@ -1,0 +1,339 @@
+/* 기존 v3의 게임 좌표와 입력은 유지하고 화면 합성만 안정화한다. */
+.game-shell{background:#05090b}
+.battle-background{
+  display:none;
+  z-index:0;
+  left:50%;
+  top:50%;
+  width:121.875%;
+  height:100%;
+  max-width:none;
+  object-fit:fill;
+  transform:translate(-50%,-50%);
+}
+.game-shell[data-phase="배치"] .battle-background,
+.game-shell[data-phase="계획"] .battle-background,
+.game-shell[data-phase="실행"] .battle-background{display:block}
+
+.game-header{z-index:80;background:transparent!important;border:0!important;border-bottom:0!important;box-shadow:none!important;pointer-events:none}
+.game-header .title{display:none}
+.game-header .header-actions,.game-header button{pointer-events:auto}
+.phase-badge{background:#071116cc;border:1px solid #30434b;backdrop-filter:blur(6px)}
+
+.battle-layout{z-index:2;inset:0!important}
+.board-column{inset:0;overflow:hidden}
+.board-stage,
+.game-shell[data-phase="배치"] .board-stage,
+.game-shell[data-phase="계획"] .board-stage,
+.game-shell[data-phase="실행"] .board-stage{
+  left:0;
+  top:0;
+  width:100%!important;
+  height:100%!important;
+  max-height:none;
+  aspect-ratio:auto;
+  overflow:visible;
+  border:0;
+  border-radius:0;
+  background:transparent;
+  box-shadow:none;
+  transform:none!important;
+}
+.board-stage::before,.board-stage::after{display:none!important}
+#game{position:absolute;inset:0;width:100%!important;height:100%!important}
+#game canvas{position:absolute;z-index:1;left:0;top:0;width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;aspect-ratio:16/9!important;transform:none}
+.game-shell.targeting-focus #game::before{
+  content:'';
+  position:absolute;
+  z-index:0;
+  inset:0;
+  pointer-events:none;
+  background:linear-gradient(180deg,rgba(2,5,7,.7) 0 8.66%,transparent 8.66% 91.34%,rgba(2,5,7,.7) 91.34% 100%);
+}
+
+.timeline-wrap,
+.game-shell[data-phase="계획"] .timeline-wrap,
+.game-shell[data-phase="실행"] .timeline-wrap{
+  z-index:90;
+  left:50%;
+  right:auto;
+  top:1.2%;
+  width:auto;
+  height:9.5%;
+  min-height:72px;
+  padding:0;
+  gap:12px;
+  overflow:visible;
+  border:0;
+  background:transparent;
+  transform:translateX(-50%);
+  pointer-events:none;
+}
+.timeline-wrap::before,.timeline-wrap::after{display:none!important}
+.timeline{height:100%;gap:clamp(8px,.7vw,14px);overflow:visible;pointer-events:auto}
+.slot{
+  width:clamp(58px,4.4vw,80px);
+  min-width:clamp(58px,4.4vw,80px);
+  height:auto;
+  aspect-ratio:1;
+  padding:0;
+  overflow:visible;
+  border:3px solid #55d8f5;
+  border-radius:50%;
+  background:#0a151bcc;
+  box-shadow:0 5px 14px #0008;
+  transform-origin:center;
+  backdrop-filter:blur(4px);
+}
+.slot.enemy{border-color:#f06f72;background:#1c0d11cc}
+.slot.enemy{color:#ffe1e1;box-shadow:0 5px 14px #0008,0 0 10px #9e2e3b66}
+.slot.enemy i{background:#6f1d29;color:#fff0f0;border-color:#ff8b8b}
+.slot.enemy.executing{border-color:#ffb0a8;background:#5b151dcc}
+.slot i{left:-4px;top:-4px;width:20px;height:20px;font-size:10px}
+.slot-sd{position:absolute;inset:5%;height:auto;display:grid;place-items:end center;border-radius:50%;overflow:hidden}
+.slot-sd img{max-width:88%;max-height:92%;object-fit:contain}
+.slot strong,.slot small{display:none}
+.slot em{right:-5px;top:auto;bottom:-4px}
+.slot.ally.planned{box-shadow:0 0 0 3px #76e6ff55,0 0 22px #61dfff,0 5px 14px #0008}
+.slot.enemy.planned{box-shadow:0 0 0 3px #ff676755,0 0 20px #ff5757,0 5px 14px #0008}
+.slot.swap-target{transform:scale(1.16)!important;border-color:#ffe18a!important;box-shadow:0 0 24px #ffd66faa!important}
+.slot.swap-target::after{content:'순서 교체';position:absolute;left:50%;top:105%;width:max-content;padding:4px 7px;border-radius:6px;background:#071116e8;color:#ffe18a;font-size:10px;transform:translateX(-50%)}
+.game-shell[data-phase="실행"] .slot{transform:scale(.82);opacity:.62}
+.game-shell[data-phase="실행"] .slot.executing{transform:scale(1.18);opacity:1;box-shadow:0 0 26px #ffe27aaa}
+.reorder-toggle{
+  flex:0 0 auto;
+  width:clamp(92px,6.8vw,124px);
+  height:clamp(48px,3.7vw,68px);
+  margin:0 6px 0 0;
+  padding:0 10px;
+  border:1px solid #b99343;
+  border-radius:10px;
+  background:#071116dd;
+  font-size:clamp(7px,.52vw,10px);
+  line-height:1.25;
+  color:#f1d47c;
+  pointer-events:auto;
+  transition:transform .22s ease,background .22s ease;
+}
+.reorder-toggle::before{display:none}
+.reorder-toggle.active{background:#372b14e8;transform:rotateX(8deg)}
+
+.mobile-action-dock{background:transparent;backdrop-filter:none;padding:0}
+.mobile-action-buttons{position:relative;display:flex;justify-content:flex-end;gap:14px}
+.combat-button{
+  width:clamp(74px,5.8vw,104px);
+  min-width:clamp(74px,5.8vw,104px);
+  min-height:0;
+  aspect-ratio:1;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:0;
+  border:2px solid #6d7e86;
+  border-radius:50%;
+  background:#081217dc;
+  text-align:center;
+}
+.combat-button i{grid-row:auto;margin:0 0 3px;font-size:25px;line-height:1}
+.combat-button span{display:block;font-size:12px;font-weight:900;line-height:1}
+.combat-button small{display:none}
+.combat-button.skill.time-awakened{--awakened:#ff4538;position:relative;z-index:2;overflow:visible;border-color:#ff786e;background:radial-gradient(circle at 50% 35%,#a92b29 0 18%,#651818 56%,#260b0d 100%);color:#fff4ee;box-shadow:0 0 14px #ff4538bf,inset 0 0 22px #ff77634d;animation:awakened-button-pulse .82s ease-in-out infinite alternate}
+.ultimate-button-flame{--awakened:#ff4538;position:absolute;z-index:1;right:0;bottom:50%;width:clamp(74px,5.8vw,104px);height:72%;border-radius:50% 50% 28% 28%;background:radial-gradient(ellipse at 20% 100%,var(--awakened) 0 11%,transparent 34%),radial-gradient(ellipse at 50% 100%,#fff1a2 0 8%,#ff8a35 18%,transparent 45%),radial-gradient(ellipse at 82% 100%,var(--awakened) 0 12%,transparent 36%);filter:blur(2px) drop-shadow(0 -6px 8px var(--awakened));transform-origin:50% 100%;animation:awakened-button-flame .56s ease-in-out infinite alternate;pointer-events:none}
+.combat-button.skill.time-awakened>i,.combat-button.skill.time-awakened>span{position:relative;z-index:1;text-shadow:0 0 8px var(--awakened)}
+@keyframes awakened-button-pulse{to{filter:brightness(1.18);box-shadow:0 0 25px color-mix(in srgb,var(--awakened) 90%,transparent),inset 0 0 24px color-mix(in srgb,var(--awakened) 38%,transparent)}}
+@keyframes awakened-button-flame{from{opacity:.58;transform:translateY(3px) scale(.92,.8) skewX(-4deg)}to{opacity:1;transform:translateY(-5px) scale(1.08,1.2) skewX(5deg)}}
+@media(prefers-reduced-motion:reduce){.combat-button.skill.time-awakened,.ultimate-button-flame{animation:none}}
+.mobile-action-top{position:absolute;right:0;bottom:calc(100% + 8px);width:100%;justify-content:flex-end}
+.mobile-action-hint,.cancel-action{display:none}
+.mobile-action-commit{display:flex;justify-content:flex-end}
+.mobile-action-top .mobile-action-commit .confirm-action{width:clamp(58px,4.3vw,78px);min-height:clamp(58px,4.3vw,78px);aspect-ratio:1;border-radius:50%;font-size:11px}
+.mobile-execute-dock{top:13%;right:1.5%;width:14%}
+.mobile-execute{border-radius:12px;background:#0a151bd9;backdrop-filter:blur(5px)}
+.mobile-execute.ready{animation:operation-ready 1.15s ease-in-out infinite alternate}
+@keyframes operation-ready{to{filter:brightness(1.16);box-shadow:0 0 24px #f4cd68aa}}
+.game-shell.operation-launch{animation:operation-launch .24s ease-out}
+@keyframes operation-launch{0%,100%{transform:translate(0)}25%{transform:translate(-3px,1px)}50%{transform:translate(3px,-1px)}75%{transform:translate(-1px,2px)}}
+
+.reorder-mode .reorder-dim{z-index:85}
+.reorder-mode .timeline-wrap{z-index:100}
+.device-mode-modal,.rotate-device{display:none!important}
+.editor-tabs [data-editor-tab="relic"],.relic-loadout{display:none!important}
+
+/* 전투 배치에 앞서 사용하는 시간대 유물 가방 */
+.game-shell[data-phase="배치"] .deployment-dock.relic-setup:not(.hidden){
+  left:11%;right:11%;top:3%;min-height:0;padding:1.1% 1.25%;
+  display:grid;grid-template-columns:1fr auto;align-items:start;gap:12px 18px;
+  border:2px solid #5b3a12;border-left:7px double #d8b45e;border-radius:18px;
+  background:radial-gradient(circle at 48% 32%,#f4e8c91f 0 18%,transparent 52%),repeating-conic-gradient(from -3deg at 50% 40%,#d8b45e0b 0 1deg,transparent 1deg 12deg),linear-gradient(145deg,#21170ff5,#4b351cf2 48%,#17100bf7);
+  box-shadow:inset 0 0 0 2px #f6d77b66,inset 0 0 0 6px #80531388,inset 0 0 34px #060403cc,0 18px 55px #000c;
+}
+.game-shell.relic-selecting .board-column::after{content:'';position:absolute;z-index:31;inset:0;background:#020507b8;backdrop-filter:blur(2px);pointer-events:auto}
+.game-shell.relic-selecting .game-header{pointer-events:none}
+.game-shell.relic-selecting .deployment-dock.relic-setup{z-index:32}
+.relic-setup-heading{grid-column:1/-1;display:flex;align-items:baseline;gap:12px}
+.relic-setup-heading small{color:#dfbd67;letter-spacing:.14em;font-size:9px}
+.relic-setup-heading b{font-size:18px}.relic-setup-heading span{color:#94aab0;font-size:10px}
+.time-relic-bag{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.time-bag-column{padding:9px;border:1px solid #82652e;border-radius:12px;background:linear-gradient(145deg,#16100bd9,#302215d9);box-shadow:inset 0 0 14px #0008,0 1px #f4d77a22}
+.time-bag-column header{display:flex;justify-content:space-between;margin-bottom:7px}
+.time-bag-column header b{font-size:13px}.time-bag-column header small{color:#9fb2b7;font-size:9px}
+.time-bag-column>div{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+.time-relic-slot{min-width:0;height:66px;padding:7px;border:1px dashed #7b6743;border-radius:9px;display:flex;align-items:center;justify-content:center;gap:7px;background:#100c08b8;color:#b8ab92;font-size:8px}
+.time-relic-slot i,.relic-orb-card>i{flex:none;width:25px;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 35% 28%,#fff 0 5%,#72d8ef 16%,#1d6680 48%,#07151d 76%);box-shadow:0 0 12px #58d8f28c,inset -4px -5px 8px #051017b8}
+.relic-icon{flex:none;width:42px;height:42px;object-fit:contain;filter:drop-shadow(0 3px 3px #0009)}
+.time-relic-slot .relic-icon{width:34px;height:34px}
+.time-bag-column.period-과거 .time-relic-slot.filled{border-style:solid;border-color:#efc44f}.time-bag-column.period-현재 .time-relic-slot.filled{border-style:solid;border-color:#b4b9b7}.time-bag-column.period-미래 .time-relic-slot.filled{border-style:solid;border-color:#4baeff}
+.relic-pool-wrap{grid-column:1;min-width:0}.relic-pool-wrap>header{display:flex;align-items:baseline;gap:10px;margin-bottom:6px}.relic-pool-wrap header b{font-size:12px}.relic-pool-wrap header small{color:#8fa4aa;font-size:8px}
+.relic-pool{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.relic-orb-card{min-width:0;min-height:82px;height:auto;padding:9px 10px;display:flex;align-items:center;gap:10px;text-align:left;border:1px solid #715932;border-radius:10px;background:linear-gradient(135deg,#110d09e8,#2b2015e8)}
+.relic-orb-card span{min-width:0}.relic-orb-card b,.relic-orb-card small{display:block}.relic-orb-card b{font-size:10px}.relic-orb-card small{margin-top:4px;color:#9aadb2;font-size:8px;line-height:1.45;white-space:normal;overflow:visible;text-overflow:clip}.relic-orb-card.selected{border-color:#f2cf72;box-shadow:0 0 16px #e9c55c77}.relic-orb-card:disabled{opacity:.35}
+.confirm-relic-setup{grid-column:2;align-self:end;min-width:140px;height:62px;border-color:#d5b458;background:linear-gradient(135deg,#9b792c,#e1c467);color:#171006;font-weight:900}
+.time-period-actions{grid-template-columns:repeat(2,1fr)!important}
+.time-period-actions button:first-child b,.time-bag-column.period-과거>header b{color:#efc44f}
+.time-period-actions button:last-child b,.time-bag-column.period-미래>header b{color:#4baeff}
+.time-period-actions button:first-child.active{border-color:#efc44f;box-shadow:0 0 0 2px #efc44f inset,0 0 24px #efc44f55}
+.time-period-actions button:last-child.active{border-color:#4baeff;box-shadow:0 0 0 2px #4baeff inset,0 0 24px #4baeff55}
+
+.mobile-watch.full,.watch-face.full{box-shadow:inset 0 0 0 2px #f6d77b,inset 0 0 0 5px #805313,inset 0 0 0 7px #e9c96d,inset 0 0 18px #6e4b2044,0 8px 18px #0009,0 0 28px 8px #ff243faa,0 0 52px 16px #ff304d55!important}
+.grand-watch.full{box-shadow:0 0 0 5px #5c421d,0 0 48px #e6c76a33,inset 0 0 45px #000,0 0 34px 9px #ff243faa,0 0 64px 18px #ff304d55!important}
+.game-shell.shards-full .mobile-watch,.game-shell.shards-full .watch-face{animation:full-watch-pulse 1.15s ease-in-out infinite alternate}
+.game-shell.shard-full-impact{animation:shard-full-impact .62s linear}
+@keyframes full-watch-pulse{to{box-shadow:inset 0 0 0 2px #f6d77b,inset 0 0 0 5px #805313,inset 0 0 0 7px #e9c96d,inset 0 0 18px #6e4b2044,0 8px 18px #0009,0 0 38px 12px #ff243fcc,0 0 72px 24px #ff304d77}}
+@keyframes shard-full-impact{0%,100%{transform:translate(0)}15%{transform:translate(-7px,2px)}30%{transform:translate(7px,-3px)}48%{transform:translate(-5px,3px)}66%{transform:translate(4px,-2px)}82%{transform:translate(-2px,1px)}}
+
+/* 시간 파편은 회중시계 안쪽 원형 링으로 표시한다. */
+.game-shell[data-phase="계획"] .mobile-time-dock,
+.game-shell[data-phase="실행"] .mobile-time-dock{display:flex!important;flex-direction:column;align-items:center;top:3%!important;width:8.5%!important;min-width:124px;height:auto!important;box-sizing:border-box}
+.mobile-time-dock>.pocket-watch-wrap{width:100%;padding-bottom:clamp(22px,2vw,36px)}
+.mobile-time-dock>.vertical-time-gauge{display:none!important}
+.mobile-time-dock>.time-shard-count{margin:0;white-space:nowrap}
+.mobile-watch::before{content:none}
+.game-shell.shards-full .mobile-time-dock .pocket-watch-wrap{animation:full-watch-shake .18s steps(2,end) infinite;transform-origin:50% 50%}
+@keyframes full-watch-shake{0%{transform:translate(-2px,-1px) rotate(-.65deg)}33%{transform:translate(2px,1px) rotate(.65deg)}66%{transform:translate(-1px,2px) rotate(-.35deg)}100%{transform:translate(2px,-1px) rotate(.35deg)}}
+@media (prefers-reduced-motion:reduce){.game-shell.shards-full .mobile-time-dock .pocket-watch-wrap{animation:none}}
+
+.game-shell[data-time="과거"]{--period:#efc44f}.game-shell[data-time="미래"]{--period:#4baeff}
+
+/* 선택 캐릭터 카드: 캐릭터의 시간대 태그를 전장 시간과 독립적으로 표시한다. */
+.mobile-unit-dock[data-time-tag="과거"]{
+  --unit-card-accent:#efc44f;
+  border-color:#76591f;
+  border-left-color:var(--unit-card-accent)!important;
+  background:radial-gradient(circle at 12% 45%,#ffe2842e 0,transparent 34%),linear-gradient(115deg,#2c210eed,#17130ded);
+  box-shadow:0 12px 30px #0008,inset 0 0 26px #efc44f14,0 0 18px #efc44f24;
+}
+.mobile-unit-dock[data-time-tag="미래"]{
+  --unit-card-accent:#4baeff;
+  border-color:#235d80;
+  border-left-color:var(--unit-card-accent)!important;
+  background:radial-gradient(circle at 12% 45%,#4baeff30 0,transparent 34%),linear-gradient(115deg,#09283bed,#091821ed);
+  box-shadow:0 12px 30px #0008,inset 0 0 26px #4baeff18,0 0 18px #4baeff24;
+}
+.mobile-unit-dock[data-time-tag="과거"]:hover,.mobile-unit-dock[data-time-tag="과거"]:focus-visible{border-color:#f5d06c;background:radial-gradient(circle at 12% 45%,#ffe2843d 0,transparent 36%),linear-gradient(115deg,#382a12f2,#1b160ef2)}
+.mobile-unit-dock[data-time-tag="미래"]:hover,.mobile-unit-dock[data-time-tag="미래"]:focus-visible{border-color:#77ceff;background:radial-gradient(circle at 12% 45%,#4baeff42 0,transparent 36%),linear-gradient(115deg,#0c344df2,#0a1d29f2)}
+.mobile-unit-dock[data-time-tag="과거"] .mobile-unit-main>small:first-child,
+.mobile-unit-dock[data-time-tag="미래"] .mobile-unit-main>small:first-child{color:var(--unit-card-accent);text-shadow:0 0 8px color-mix(in srgb,var(--unit-card-accent) 55%,transparent)}
+.mobile-unit-dock[data-time-tag="과거"] .mobile-unit-portrait,
+.mobile-unit-dock[data-time-tag="미래"] .mobile-unit-portrait{box-shadow:inset 0 0 0 2px var(--unit-card-accent),0 0 14px color-mix(in srgb,var(--unit-card-accent) 32%,transparent)}
+.mobile-unit-dock[data-time-tag="과거"] .mobile-hp span{background:linear-gradient(90deg,#bd851d,#ffe38a);box-shadow:0 0 8px #efc44f}
+.mobile-unit-dock[data-time-tag="미래"] .mobile-hp span{background:linear-gradient(90deg,#238ccc,#78dcff);box-shadow:0 0 8px #4baeff}
+.mobile-unit-dock[data-team="적군"]{border-color:#d84e59;background:radial-gradient(circle at 10% 45%,#ff596333 0,transparent 38%),linear-gradient(115deg,#42181df5,#1d0c12f5);box-shadow:0 8px 24px #000b,0 0 18px #b832454d}
+.mobile-unit-dock[data-team="적군"] .mobile-unit-main>small:first-child{color:#ff8b91;text-shadow:0 0 8px #ff596388}
+.mobile-unit-dock[data-team="적군"] .mobile-unit-portrait{box-shadow:inset 0 0 0 2px #f06f72,0 0 14px #d542524d}
+.mobile-unit-dock[data-team="적군"] .mobile-hp span{background:linear-gradient(90deg,#a92335,#ff757d);box-shadow:0 0 8px #e94d5b}
+.mobile-unit-dock[data-team="적군"] .mobile-skill-detail{border-color:#9a3e49;background:#2a1117e8}
+.mobile-watch::after,.watch-face::after{background:linear-gradient(90deg,rgba(239,196,79,.72) 0 50%,rgba(75,174,255,.72) 50% 100%),radial-gradient(circle at 34% 27%,#fff8d980 0 2%,transparent 17%),repeating-conic-gradient(from 4deg,transparent 0 14deg,#10283f20 14deg 15deg)!important}
+.grand-watch::before{content:'';position:absolute;z-index:0;inset:7%;border-radius:50%;background:linear-gradient(90deg,rgba(239,196,79,.68) 0 50%,rgba(75,174,255,.68) 50% 100%);box-shadow:inset 0 0 28px #06101799;pointer-events:none}
+.watch-crown,.grand-watch-crown{display:grid!important;place-items:center;color:#fff2b0!important;font-size:clamp(8px,.75vw,14px)!important;font-weight:1000;text-shadow:0 1px 3px #210d00,0 0 6px #ffcf58;line-height:1}
+.grand-watch-crown{font-size:18px!important}
+/* 2026-09-04: 시간 파편은 시계 외곽 링에서 시계 방향으로 충전한다. */
+.mobile-time-dock>.pocket-watch-wrap{padding-bottom:0}
+.mobile-time-dock{overflow:visible!important}
+.mobile-time-dock>.pocket-watch-wrap{position:relative;z-index:3;cursor:default}
+.time-choice-drawer{position:absolute;z-index:2;left:100%;top:17%;display:grid;gap:6px;width:clamp(120px,7.4vw,148px);opacity:0;pointer-events:none;transform:translateX(-68%) scaleX(.38);transform-origin:left center;animation:time-choice-drawer-open .42s cubic-bezier(.18,.88,.28,1.18) forwards}
+.time-choice-drawer::before{content:'';position:absolute;z-index:-1;left:-18px;top:8px;bottom:8px;width:28px;border-radius:0 10px 10px 0;background:linear-gradient(180deg,#2a2117,#091116);box-shadow:0 5px 14px #0009}
+.time-choice-drawer button{display:grid;grid-template-columns:1fr;align-items:center;min-height:42px;padding:7px 10px 7px 13px;border:1px solid;border-left-width:3px;border-radius:0 11px 11px 0;background:#0b151aee;color:#fff;box-shadow:0 7px 16px #0008,inset 0 0 14px #ffffff0c;text-align:left;cursor:pointer;transition:filter .16s ease,transform .16s ease}
+.time-choice-drawer button:hover,.time-choice-drawer button:focus-visible{filter:brightness(1.18);transform:translateX(4px)}
+.time-choice-drawer button small{font-size:clamp(7px,.55vw,10px);font-weight:1000;letter-spacing:.08em;opacity:.72}
+.time-choice-drawer button b{font-size:clamp(10px,.78vw,14px);font-weight:1000;white-space:nowrap}
+.time-choice-drawer .past{border-color:#efc44f;background:linear-gradient(90deg,#63470ff2,#19150eee);color:#ffe89b}
+.time-choice-drawer .future{border-color:#4baeff;background:linear-gradient(90deg,#0a4c79f2,#0a1720ee);color:#a9e1ff}
+@keyframes time-choice-drawer-open{0%{opacity:0;transform:translateX(-68%) scaleX(.38)}55%{opacity:1}100%{opacity:1;pointer-events:auto;transform:translateX(0) scaleX(1)}}
+.time-charge-ring{position:absolute;z-index:4;inset:-5px;border-radius:50%;background:conic-gradient(from 0deg,#42baff 0 var(--charge),#6a7072 var(--charge) 360deg);-webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 6px),#000 calc(100% - 5px));mask:radial-gradient(farthest-side,transparent calc(100% - 6px),#000 calc(100% - 5px));filter:drop-shadow(0 0 4px #42baff77);pointer-events:none}
+.time-charge-ring.charged{animation:time-charge-glow 1.8s ease-in-out infinite alternate}
+.time-charge-ring.charged::after{content:'';position:absolute;inset:0;border-radius:50%;background:conic-gradient(from calc(var(--charge) - 10deg),transparent 0 5deg,#e8f9ff 6.5deg 8deg,transparent 10deg 360deg);animation:time-charge-sparkle 1.8s ease-in-out infinite;pointer-events:none}
+.grand-watch>.time-charge-ring{inset:-14px;-webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 10px),#000 calc(100% - 9px));mask:radial-gradient(farthest-side,transparent calc(100% - 10px),#000 calc(100% - 9px))}
+@keyframes time-charge-glow{from{filter:drop-shadow(0 0 3px #42baff66) brightness(.98)}to{filter:drop-shadow(0 0 8px #83dcffaa) brightness(1.16)}}
+@keyframes time-charge-sparkle{0%,34%{opacity:.18}55%{opacity:1}78%,100%{opacity:.3}}
+.mobile-watch::after,.watch-face::after{background:radial-gradient(circle at 34% 27%,#fff8d980 0 2%,transparent 17%),repeating-conic-gradient(from 4deg,transparent 0 14deg,#8a642515 14deg 15deg)!important}
+.grand-watch::before{background:radial-gradient(circle at 46% 38%,#283b40 0 9%,#0b151a 45%,#05090c 100%)!important}
+.period-과거 .watch-hand,.period-과거.watch-face .hand,.period-미래 .watch-hand,.period-미래.watch-face .hand,.grand-watch.period-과거 .grand-hand.actual,.grand-watch.period-미래 .grand-hand.actual{animation:none!important}
+.time-period-remaining{display:block;margin-top:3px;color:#d7dde0;font-size:clamp(6px,.52vw,10px);font-weight:900;white-space:nowrap;text-align:center;text-shadow:0 1px 3px #000}
+.watch-time-callout{position:absolute;z-index:8;left:74%;top:50%;min-width:132px;padding:7px 12px;border-left:2px solid #f2ce6b;border-radius:0 8px 8px 0;background:linear-gradient(90deg,#18130fee,#091013d9);color:#fff0bc;font-size:clamp(9px,.78vw,14px);font-weight:1000;letter-spacing:.04em;opacity:0;transform:translate(0,-50%) scale(.86);pointer-events:none;white-space:nowrap}
+.watch-time-callout.show{animation:watch-time-callout 1.5s ease both}
+@keyframes watch-time-callout{0%{opacity:0;transform:translate(-12px,-50%) scale(.82)}18%,68%{opacity:1;transform:translate(0,-50%) scale(1)}100%{opacity:0;transform:translate(14px,-50%) scale(.96)}}
+@media(prefers-reduced-motion:reduce){.watch-time-callout.show{animation-duration:.35s}.time-charge-ring.charged,.time-charge-ring.charged::after{animation:none}.time-choice-drawer{animation:none;opacity:1;pointer-events:auto;transform:none}}
+
+/* 아이콘 가방과 독립된 정보 패널. 전장 입력 차단은 relic-selecting에서 유지한다. */
+.game-shell[data-phase="배치"] .deployment-dock.relic-setup:not(.hidden){
+  left:14%;right:14%;top:7%;max-height:86%;overflow:auto;
+  padding:20px;grid-template-columns:minmax(180px,.8fr) minmax(0,2fr);
+  gap:18px 22px;border-radius:16px;
+}
+.relic-setup-heading{grid-column:1/-1;flex-wrap:wrap;gap:8px 16px;padding-bottom:12px;border-bottom:1px solid #b08a454d}
+.relic-setup-heading b{color:#ffe4a0;font-size:20px}
+.relic-setup-heading span{color:#c7baa0;font-size:12px}
+.relic-inspector{grid-column:1;grid-row:2/4;min-width:0;padding:18px;border:3px double #a17c43;border-radius:9px;background:linear-gradient(135deg,#32232cec,#1a141aec);box-shadow:inset 0 0 22px #0008;display:flex;flex-direction:column;align-items:flex-start;gap:12px}
+.relic-inspector>small{color:#c2af8c;line-height:1.6;font-size:12px}
+.relic-inspector-icon{align-self:center;width:105px;height:105px;display:grid;place-items:center;background:radial-gradient(circle,#e8c67525,transparent 70%)}
+.relic-inspector-icon .relic-icon{width:100%;height:100%}
+.relic-inspector h3{margin:0;color:#ffe5a4;font-size:19px;line-height:1.45;word-break:keep-all}
+.relic-inspector p{margin:0;font-size:14px;line-height:1.7;color:#f2e9d9;word-break:keep-all}
+.relic-location{padding:5px 10px;border:1px solid #9a7847;border-radius:5px;color:#e8cb88;font-size:12px}
+.relic-inspector-empty{margin:auto 0;color:#bcae99;line-height:1.9;font-size:14px}
+#unequip-selected-relic{margin-top:auto;padding:9px 12px;color:#e2cfa7;border:1px solid #806343;background:#211a16;font-size:12px}
+.relic-setup .time-relic-bag{grid-column:2;grid-row:2;gap:12px}
+.relic-setup .time-bag-column{padding:12px;background:linear-gradient(145deg,#40303a,#211b24);border:2px solid #8f6c48;box-shadow:inset 0 0 0 2px #151017,0 4px 8px #0006}
+.relic-setup .time-bag-column header b{font-size:16px}
+.relic-setup .time-bag-column header small{font-size:12px;color:#c7b89d}
+.relic-setup .time-bag-column>div{gap:8px}
+.relic-setup .time-relic-slot,.relic-setup .relic-orb-card,.relic-pool-empty{
+  min-width:0;width:100%;height:auto;min-height:0;aspect-ratio:1;padding:7px;
+  border:2px solid #74606c;border-radius:6px;background:linear-gradient(145deg,#332939,#211c29);
+  box-shadow:inset 0 0 0 2px #100e17,inset 0 0 16px #0006;display:grid;place-items:center;
+}
+.relic-setup .time-relic-slot.empty,.relic-pool-empty{background:linear-gradient(145deg,#49303b,#32232e);border-color:#70535c}
+.relic-setup .relic-icon{width:88%;height:88%;object-fit:contain;pointer-events:none}
+.relic-setup [draggable="true"]{cursor:grab}
+.relic-setup [draggable="true"]:active{cursor:grabbing}
+.relic-setup .selected{border-color:#fff0c2;box-shadow:0 0 0 2px #ddbc6c,inset 0 0 18px #e9c55c33}
+.relic-setup .relic-pool-wrap{grid-column:2;grid-row:3;padding:14px;border:2px solid #84654c;border-radius:9px;background:#211b25;min-width:0}
+.relic-setup .relic-pool-wrap header{flex-wrap:wrap;gap:6px 12px}
+.relic-setup .relic-pool-wrap header b{color:#edd4a1;font-size:15px}
+.relic-setup .relic-pool-wrap header small{color:#bdaf9f;font-size:11px}
+.relic-setup .relic-pool{grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}
+.relic-setup .relic-drop-target{outline:3px solid #fff1b8;outline-offset:2px;background-color:#73613b;box-shadow:0 0 20px #f2cf7277}
+.relic-dragging{opacity:.4}
+.relic-setup-footer{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;gap:14px}
+.relic-setup-footer>small{color:#c6b594;font-size:12px}
+.relic-setup-footer .confirm-relic-setup{height:46px;padding:0 22px;min-width:160px;font-size:14px}
+@media(max-height:760px){.game-shell[data-phase="배치"] .deployment-dock.relic-setup:not(.hidden){top:4%;max-height:92%;padding:14px;gap:12px 16px}.relic-inspector{padding:12px;gap:8px}.relic-inspector-icon{width:72px;height:72px}.relic-inspector h3{font-size:16px}.relic-inspector p{font-size:12px}.relic-setup .time-bag-column{padding:8px}}
+
+/* 레이어 안정화에서 숨겨졌던 시간대 전장 필터를 모든 시간대에 복원한다. */
+.game-shell[data-time="과거"][data-phase="계획"] .board-stage::before,
+.game-shell[data-time="과거"][data-phase="실행"] .board-stage::before,
+.game-shell[data-time="현재"][data-phase="계획"] .board-stage::before,
+.game-shell[data-time="현재"][data-phase="실행"] .board-stage::before,
+.game-shell[data-time="미래"][data-phase="계획"] .board-stage::before,
+.game-shell[data-time="미래"][data-phase="실행"] .board-stage::before{
+  display:block!important;
+  content:'';
+  position:absolute;
+  z-index:4;
+  inset:0;
+  background:var(--time-wash);
+  mix-blend-mode:color;
+  pointer-events:none;
+  transition:background .75s ease,opacity .75s ease;
+}

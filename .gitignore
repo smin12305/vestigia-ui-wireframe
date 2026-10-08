@@ -1,0 +1,20 @@
+# Local repository metadata, runtime caches, and temporary Office files
+.git/
+**/__pycache__/
+*.py[cod]
+~$*
+.DS_Store
+Thumbs.db
+
+# Local credentials and environment configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.pfx
+
+# Installed dependencies and browser profiles
+**/node_modules/
+**/.chrome-*/
+**/.headless-profile/

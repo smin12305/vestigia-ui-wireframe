@@ -1,0 +1,13 @@
+{
+  "original_sha256": "a5dd9cd1d3eb82064ddbc2ec6c32b51a0494abccc584addb3f403d587a008dc0",
+  "candidate_sha256": "dabe0b487dd945f9e8bcda64ffb574cbd9207ce639f9a8c777d9efc0019f997a",
+  "sections": [
+    "2.2.1 전투 진입",
+    "2.2.2 턴 설계",
+    "2.2.3 작전 개시와 턴 실행",
+    "2.2.4 다음 턴",
+    "2.2.5 전투 결과와 보상",
+    "2.2.6 설정과 도전 포기 확인"
+  ],
+  "screen_count": 14
+}

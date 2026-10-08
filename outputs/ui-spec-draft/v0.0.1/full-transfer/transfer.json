@@ -1,0 +1,1241 @@
+{
+  "original_sha256": "21fa2a12ccf7544079961c9ca696a09ed4d66c2b3e9009317ec1a8e7527f3f2c",
+  "candidate_sha256": "efabcc1d913da7edff4faaf074dc2288cae4e3abe22d14ed8a9a6772b6165e81",
+  "prefix_element_count": 75,
+  "preserved_through": "2.4",
+  "screens": [
+    {
+      "number": "3.1",
+      "screen_id": "B00",
+      "title": "전투 진입"
+    },
+    {
+      "number": "3.2",
+      "screen_id": "B01",
+      "title": "턴 설계"
+    },
+    {
+      "number": "3.3",
+      "screen_id": "B02",
+      "title": "캐릭터 정보"
+    },
+    {
+      "number": "3.4",
+      "screen_id": "B03",
+      "title": "이동 계획"
+    },
+    {
+      "number": "3.5",
+      "screen_id": "B04",
+      "title": "일반 공격 지정"
+    },
+    {
+      "number": "3.6",
+      "screen_id": "B05",
+      "title": "스킬 지정"
+    },
+    {
+      "number": "3.7",
+      "screen_id": "B06",
+      "title": "턴 실행"
+    },
+    {
+      "number": "3.8",
+      "screen_id": "B07",
+      "title": "시간대 선택과 전환"
+    },
+    {
+      "number": "3.9",
+      "screen_id": "B08",
+      "title": "미래 관측과 개별 미리보기"
+    },
+    {
+      "number": "3.10",
+      "screen_id": "B09",
+      "title": "적 행동 예고"
+    },
+    {
+      "number": "3.11",
+      "screen_id": "B10",
+      "title": "전투 결과와 보상"
+    },
+    {
+      "number": "3.12",
+      "screen_id": "B11",
+      "title": "계획 미입력 경고"
+    },
+    {
+      "number": "3.13",
+      "screen_id": "B12",
+      "title": "설정"
+    },
+    {
+      "number": "3.14",
+      "screen_id": "B13",
+      "title": "도전 포기 확인"
+    }
+  ],
+  "source_coverage": {
+    "41": [
+      "overview rewritten"
+    ],
+    "42": [
+      "migrated"
+    ],
+    "48": [
+      "migrated"
+    ],
+    "45": [
+      "data categories rewritten; UI conditions moved to state/input definitions"
+    ],
+    "49": [
+      "reference retained"
+    ],
+    "51": [
+      "overview rewritten"
+    ],
+    "52": [
+      "migrated"
+    ],
+    "134": [
+      "reference retained",
+      "reference retained"
+    ],
+    "53": [
+      "migrated"
+    ],
+    "56": [
+      "migrated"
+    ],
+    "57": [
+      "migrated"
+    ],
+    "60": [
+      "migrated"
+    ],
+    "62": [
+      "reference retained"
+    ],
+    "64": [
+      "migrated"
+    ],
+    "65": [
+      "migrated"
+    ],
+    "70": [
+      "migrated"
+    ],
+    "71": [
+      "migrated"
+    ],
+    "72": [
+      "reference retained"
+    ],
+    "74": [
+      "migrated"
+    ],
+    "75": [
+      "migrated"
+    ],
+    "77": [
+      "migrated"
+    ],
+    "78": [
+      "reference retained"
+    ],
+    "80": [
+      "migrated"
+    ],
+    "83": [
+      "migrated"
+    ],
+    "85": [
+      "migrated"
+    ],
+    "87": [
+      "migrated"
+    ],
+    "89": [
+      "migrated"
+    ],
+    "91": [
+      "migrated"
+    ],
+    "93": [
+      "migrated"
+    ],
+    "95": [
+      "migrated"
+    ],
+    "96": [
+      "migrated"
+    ],
+    "97": [
+      "reference retained"
+    ],
+    "99": [
+      "migrated"
+    ],
+    "102": [
+      "migrated"
+    ],
+    "103": [
+      "migrated"
+    ],
+    "104": [
+      "reference retained"
+    ],
+    "117": [
+      "migrated"
+    ],
+    "119": [
+      "reference retained"
+    ],
+    "111": [
+      "migrated"
+    ],
+    "121": [
+      "migrated"
+    ],
+    "107": [
+      "data categories rewritten; UI conditions moved to state/input definitions"
+    ],
+    "125": [
+      "migrated"
+    ],
+    "126": [
+      "migrated"
+    ],
+    "109": [
+      "reference retained"
+    ],
+    "127": [
+      "reference retained"
+    ],
+    "68": [
+      "migrated"
+    ],
+    "112": [
+      "migrated"
+    ],
+    "115": [
+      "migrated"
+    ],
+    "122": [
+      "migrated"
+    ],
+    "129": [
+      "migrated"
+    ],
+    "132": [
+      "migrated"
+    ],
+    "136": [
+      "overview rewritten"
+    ],
+    "137": [
+      "migrated"
+    ],
+    "140": [
+      "reference retained"
+    ],
+    "138": [
+      "migrated"
+    ],
+    "143": [
+      "data categories rewritten; UI conditions moved to state/input definitions"
+    ],
+    "145": [
+      "reference retained"
+    ],
+    "147": [
+      "migrated"
+    ],
+    "148": [
+      "migrated"
+    ],
+    "151": [
+      "migrated"
+    ],
+    "154": [
+      "migrated"
+    ],
+    "155": [
+      "reference retained"
+    ],
+    "157": [
+      "overview rewritten"
+    ],
+    "158": [
+      "migrated"
+    ],
+    "161": [
+      "reference retained"
+    ],
+    "159": [
+      "migrated"
+    ],
+    "175": [
+      "migrated"
+    ],
+    "164": [
+      "data categories rewritten; UI conditions moved to state/input definitions"
+    ],
+    "166": [
+      "reference retained"
+    ],
+    "168": [
+      "migrated"
+    ],
+    "169": [
+      "migrated"
+    ],
+    "172": [
+      "migrated"
+    ],
+    "176": [
+      "reference retained"
+    ],
+    "185": [
+      "overview rewritten"
+    ],
+    "186": [
+      "migrated"
+    ],
+    "189": [
+      "reference retained"
+    ],
+    "187": [
+      "migrated"
+    ],
+    "192": [
+      "data categories rewritten; UI conditions moved to state/input definitions"
+    ],
+    "194": [
+      "reference retained"
+    ],
+    "178": [
+      "migrated"
+    ],
+    "179": [
+      "migrated"
+    ],
+    "183": [
+      "reference retained"
+    ],
+    "180": [
+      "migrated"
+    ],
+    "182": [
+      "migrated"
+    ],
+    "206": [
+      "migrated"
+    ],
+    "207": [
+      "migrated"
+    ],
+    "210": [
+      "reference retained"
+    ],
+    "208": [
+      "migrated"
+    ],
+    "212": [
+      "migrated"
+    ],
+    "213": [
+      "migrated"
+    ],
+    "216": [
+      "reference retained"
+    ],
+    "214": [
+      "migrated"
+    ],
+    "218": [
+      "migrated"
+    ],
+    "219": [
+      "migrated"
+    ],
+    "222": [
+      "reference retained"
+    ],
+    "220": [
+      "migrated"
+    ],
+    "33": [
+      "common rules moved to B04"
+    ],
+    "37": [
+      "cancel area preserved and clarified"
+    ],
+    "39": [
+      "confirmed conditions retained; proposals separately retained below"
+    ],
+    "34": [
+      "migrated"
+    ],
+    "196": [
+      "migrated"
+    ],
+    "197": [
+      "migrated"
+    ],
+    "200": [
+      "migrated"
+    ],
+    "203": [
+      "migrated"
+    ],
+    "204": [
+      "reference retained"
+    ],
+    "224": [
+      "overview rewritten"
+    ],
+    "225": [
+      "migrated"
+    ],
+    "228": [
+      "reference retained"
+    ],
+    "226": [
+      "migrated"
+    ],
+    "255": [
+      "migrated"
+    ],
+    "256": [
+      "migrated"
+    ],
+    "258": [
+      "migrated"
+    ],
+    "259": [
+      "reference retained"
+    ],
+    "231": [
+      "data categories rewritten; UI conditions moved to state/input definitions"
+    ],
+    "233": [
+      "reference retained"
+    ],
+    "243": [
+      "migrated"
+    ],
+    "244": [
+      "migrated"
+    ],
+    "247": [
+      "reference retained"
+    ],
+    "245": [
+      "migrated"
+    ],
+    "249": [
+      "migrated"
+    ],
+    "250": [
+      "migrated"
+    ],
+    "253": [
+      "reference retained"
+    ],
+    "251": [
+      "migrated"
+    ],
+    "261": [
+      "migrated"
+    ],
+    "267": [
+      "reference retained"
+    ],
+    "262": [
+      "image caption retained"
+    ],
+    "263": [
+      "migrated"
+    ],
+    "264": [
+      "migrated"
+    ],
+    "265": [
+      "migrated"
+    ],
+    "266": [
+      "migrated"
+    ],
+    "269": [
+      "migrated"
+    ],
+    "275": [
+      "reference retained"
+    ],
+    "270": [
+      "image caption retained"
+    ],
+    "271": [
+      "migrated"
+    ],
+    "272": [
+      "migrated"
+    ],
+    "273": [
+      "migrated"
+    ],
+    "274": [
+      "migrated"
+    ],
+    "277": [
+      "migrated"
+    ],
+    "282": [
+      "reference retained"
+    ],
+    "278": [
+      "image caption retained"
+    ],
+    "279": [
+      "migrated"
+    ],
+    "280": [
+      "migrated"
+    ],
+    "281": [
+      "migrated"
+    ],
+    "235": [
+      "migrated"
+    ],
+    "236": [
+      "migrated"
+    ],
+    "239": [
+      "migrated"
+    ],
+    "241": [
+      "reference retained"
+    ],
+    "284": [
+      "overview rewritten"
+    ],
+    "285": [
+      "migrated"
+    ],
+    "288": [
+      "reference retained"
+    ],
+    "286": [
+      "migrated"
+    ],
+    "291": [
+      "data categories rewritten; UI conditions moved to state/input definitions"
+    ],
+    "293": [
+      "reference retained"
+    ],
+    "295": [
+      "migrated"
+    ],
+    "296": [
+      "migrated"
+    ],
+    "299": [
+      "migrated"
+    ],
+    "302": [
+      "migrated"
+    ],
+    "303": [
+      "reference retained"
+    ],
+    "305": [
+      "overview rewritten"
+    ],
+    "306": [
+      "migrated"
+    ],
+    "309": [
+      "reference retained"
+    ],
+    "307": [
+      "migrated"
+    ],
+    "312": [
+      "data categories rewritten; UI conditions moved to state/input definitions"
+    ],
+    "314": [
+      "reference retained"
+    ],
+    "326": [
+      "migrated"
+    ],
+    "332": [
+      "reference retained"
+    ],
+    "327": [
+      "image caption retained"
+    ],
+    "328": [
+      "migrated"
+    ],
+    "329": [
+      "migrated"
+    ],
+    "330": [
+      "migrated"
+    ],
+    "331": [
+      "migrated"
+    ],
+    "316": [
+      "migrated"
+    ],
+    "317": [
+      "migrated"
+    ],
+    "320": [
+      "migrated"
+    ],
+    "323": [
+      "migrated"
+    ],
+    "324": [
+      "reference retained"
+    ],
+    "334": [
+      "overview rewritten"
+    ],
+    "335": [
+      "migrated"
+    ],
+    "338": [
+      "reference retained"
+    ],
+    "336": [
+      "migrated"
+    ],
+    "341": [
+      "data categories rewritten; UI conditions moved to state/input definitions"
+    ],
+    "343": [
+      "reference retained"
+    ],
+    "345": [
+      "migrated"
+    ],
+    "346": [
+      "migrated"
+    ],
+    "349": [
+      "migrated"
+    ],
+    "352": [
+      "migrated"
+    ],
+    "353": [
+      "reference retained"
+    ],
+    "355": [
+      "overview rewritten"
+    ],
+    "356": [
+      "migrated"
+    ],
+    "359": [
+      "reference retained"
+    ],
+    "357": [
+      "migrated"
+    ],
+    "362": [
+      "data categories rewritten; UI conditions moved to state/input definitions"
+    ],
+    "364": [
+      "reference retained"
+    ],
+    "366": [
+      "migrated"
+    ],
+    "367": [
+      "migrated"
+    ],
+    "370": [
+      "migrated"
+    ],
+    "373": [
+      "migrated"
+    ],
+    "374": [
+      "reference retained"
+    ],
+    "376": [
+      "overview updated with current victory/failure transitions"
+    ],
+    "386": [
+      "migrated"
+    ],
+    "391": [
+      "reference retained"
+    ],
+    "387": [
+      "image caption retained"
+    ],
+    "377": [
+      "components updated with current destinations"
+    ],
+    "414": [
+      "data categories rewritten; UI conditions moved to state/input definitions"
+    ],
+    "416": [
+      "reference retained"
+    ],
+    "388": [
+      "migrated"
+    ],
+    "389": [
+      "migrated"
+    ],
+    "390": [
+      "migrated"
+    ],
+    "393": [
+      "migrated"
+    ],
+    "398": [
+      "reference retained"
+    ],
+    "394": [
+      "image caption retained"
+    ],
+    "395": [
+      "migrated"
+    ],
+    "396": [
+      "migrated"
+    ],
+    "397": [
+      "migrated"
+    ],
+    "400": [
+      "migrated"
+    ],
+    "405": [
+      "reference retained"
+    ],
+    "401": [
+      "image caption retained"
+    ],
+    "402": [
+      "migrated"
+    ],
+    "403": [
+      "migrated"
+    ],
+    "404": [
+      "skip destination updated"
+    ],
+    "407": [
+      "migrated"
+    ],
+    "412": [
+      "reference retained"
+    ],
+    "408": [
+      "image caption retained"
+    ],
+    "409": [
+      "migrated"
+    ],
+    "410": [
+      "migrated"
+    ],
+    "411": [
+      "migrated"
+    ],
+    "380": [
+      "transitions updated with current decisions"
+    ],
+    "383": [
+      "resolved destinations removed from unknown list; remaining questions retained"
+    ],
+    "384": [
+      "reference retained"
+    ],
+    "418": [
+      "overview rewritten"
+    ],
+    "429": [
+      "migrated"
+    ],
+    "434": [
+      "reference retained"
+    ],
+    "430": [
+      "image caption retained"
+    ],
+    "419": [
+      "migrated"
+    ],
+    "431": [
+      "migrated"
+    ],
+    "432": [
+      "migrated"
+    ],
+    "420": [
+      "components/data/input separated",
+      "data categories rewritten; UI conditions moved to state/input definitions"
+    ],
+    "423": [
+      "migrated"
+    ],
+    "424": [
+      "migrated"
+    ],
+    "433": [
+      "migrated"
+    ],
+    "426": [
+      "unresolved questions retained; legacy approval narration removed"
+    ],
+    "427": [
+      "reference retained"
+    ],
+    "436": [
+      "B12/B13 overview separated"
+    ],
+    "437": [
+      "B12/B13 summary expanded into individual specifications",
+      "data categories rewritten; UI conditions moved to state/input definitions",
+      "data categories rewritten; UI conditions moved to state/input definitions"
+    ],
+    "441": [
+      "migrated"
+    ],
+    "448": [
+      "reference retained"
+    ],
+    "442": [
+      "image caption retained"
+    ],
+    "443": [
+      "migrated"
+    ],
+    "444": [
+      "migrated"
+    ],
+    "445": [
+      "migrated"
+    ],
+    "447": [
+      "migrated"
+    ],
+    "446": [
+      "migrated"
+    ],
+    "439": [
+      "reference retained"
+    ],
+    "450": [
+      "migrated"
+    ],
+    "456": [
+      "reference retained",
+      "reference retained"
+    ],
+    "451": [
+      "Figma label retained in overview"
+    ],
+    "452": [
+      "migrated"
+    ],
+    "453": [
+      "yes/no destinations updated"
+    ],
+    "455": [
+      "migrated"
+    ],
+    "454": [
+      "destination resolved; remaining save/accounting questions retained"
+    ],
+    "458": [
+      "comparison introduction rewritten"
+    ],
+    "459": [
+      "comparison retained; resolved destinations and failure timing updated"
+    ],
+    "460": [
+      "comparison retained; resolved destinations and failure timing updated"
+    ],
+    "461": [
+      "comparison retained; resolved destinations and failure timing updated"
+    ],
+    "462": [
+      "comparison retained; resolved destinations and failure timing updated"
+    ],
+    "463": [
+      "comparison retained; resolved destinations and failure timing updated"
+    ],
+    "464": [
+      "reference retained"
+    ],
+    "466": [
+      "migrated"
+    ],
+    "467": [
+      "migrated"
+    ],
+    "470": [
+      "functional criteria clarified"
+    ],
+    "472": [
+      "migrated"
+    ],
+    "32": [
+      "replaced by numbered outline"
+    ],
+    "36": [
+      "replaced by numbered outline"
+    ],
+    "38": [
+      "replaced by numbered outline"
+    ],
+    "40": [
+      "replaced by numbered outline"
+    ],
+    "44": [
+      "replaced by numbered outline"
+    ],
+    "47": [
+      "replaced by numbered outline"
+    ],
+    "50": [
+      "replaced by numbered outline"
+    ],
+    "55": [
+      "replaced by numbered outline"
+    ],
+    "59": [
+      "replaced by numbered outline"
+    ],
+    "63": [
+      "replaced by numbered outline"
+    ],
+    "67": [
+      "replaced by numbered outline"
+    ],
+    "73": [
+      "replaced by numbered outline"
+    ],
+    "79": [
+      "replaced by numbered outline"
+    ],
+    "82": [
+      "replaced by numbered outline"
+    ],
+    "86": [
+      "replaced by numbered outline"
+    ],
+    "90": [
+      "replaced by numbered outline"
+    ],
+    "94": [
+      "replaced by numbered outline"
+    ],
+    "98": [
+      "replaced by numbered outline"
+    ],
+    "101": [
+      "replaced by numbered outline"
+    ],
+    "105": [
+      "replaced by numbered outline"
+    ],
+    "106": [
+      "covered by common specification and chapter introduction"
+    ],
+    "110": [
+      "replaced by numbered outline"
+    ],
+    "114": [
+      "replaced by numbered outline"
+    ],
+    "116": [
+      "replaced by numbered outline"
+    ],
+    "120": [
+      "replaced by numbered outline"
+    ],
+    "124": [
+      "replaced by numbered outline"
+    ],
+    "128": [
+      "replaced by numbered outline"
+    ],
+    "131": [
+      "replaced by numbered outline"
+    ],
+    "135": [
+      "replaced by numbered outline"
+    ],
+    "141": [
+      "replaced by numbered outline"
+    ],
+    "142": [
+      "covered by common specification and chapter introduction"
+    ],
+    "146": [
+      "replaced by numbered outline"
+    ],
+    "150": [
+      "replaced by numbered outline"
+    ],
+    "153": [
+      "replaced by numbered outline"
+    ],
+    "156": [
+      "replaced by numbered outline"
+    ],
+    "162": [
+      "replaced by numbered outline"
+    ],
+    "163": [
+      "covered by common specification and chapter introduction"
+    ],
+    "167": [
+      "replaced by numbered outline"
+    ],
+    "171": [
+      "replaced by numbered outline"
+    ],
+    "174": [
+      "replaced by numbered outline"
+    ],
+    "177": [
+      "replaced by numbered outline"
+    ],
+    "184": [
+      "replaced by numbered outline"
+    ],
+    "190": [
+      "replaced by numbered outline"
+    ],
+    "191": [
+      "covered by common specification and chapter introduction"
+    ],
+    "195": [
+      "replaced by numbered outline"
+    ],
+    "199": [
+      "replaced by numbered outline"
+    ],
+    "202": [
+      "replaced by numbered outline"
+    ],
+    "205": [
+      "replaced by numbered outline"
+    ],
+    "211": [
+      "replaced by numbered outline"
+    ],
+    "217": [
+      "replaced by numbered outline"
+    ],
+    "223": [
+      "replaced by numbered outline"
+    ],
+    "229": [
+      "replaced by numbered outline"
+    ],
+    "230": [
+      "covered by common specification and chapter introduction"
+    ],
+    "234": [
+      "replaced by numbered outline"
+    ],
+    "238": [
+      "replaced by numbered outline"
+    ],
+    "242": [
+      "replaced by numbered outline"
+    ],
+    "248": [
+      "replaced by numbered outline"
+    ],
+    "254": [
+      "replaced by numbered outline"
+    ],
+    "260": [
+      "replaced by numbered outline"
+    ],
+    "268": [
+      "replaced by numbered outline"
+    ],
+    "276": [
+      "replaced by numbered outline"
+    ],
+    "283": [
+      "replaced by numbered outline"
+    ],
+    "289": [
+      "replaced by numbered outline"
+    ],
+    "290": [
+      "covered by common specification and chapter introduction"
+    ],
+    "294": [
+      "replaced by numbered outline"
+    ],
+    "298": [
+      "replaced by numbered outline"
+    ],
+    "301": [
+      "replaced by numbered outline"
+    ],
+    "304": [
+      "replaced by numbered outline"
+    ],
+    "310": [
+      "replaced by numbered outline"
+    ],
+    "311": [
+      "covered by common specification and chapter introduction"
+    ],
+    "315": [
+      "replaced by numbered outline"
+    ],
+    "319": [
+      "replaced by numbered outline"
+    ],
+    "322": [
+      "replaced by numbered outline"
+    ],
+    "325": [
+      "replaced by numbered outline"
+    ],
+    "333": [
+      "replaced by numbered outline"
+    ],
+    "339": [
+      "replaced by numbered outline"
+    ],
+    "340": [
+      "covered by common specification and chapter introduction"
+    ],
+    "344": [
+      "replaced by numbered outline"
+    ],
+    "348": [
+      "replaced by numbered outline"
+    ],
+    "351": [
+      "replaced by numbered outline"
+    ],
+    "354": [
+      "replaced by numbered outline"
+    ],
+    "360": [
+      "replaced by numbered outline"
+    ],
+    "361": [
+      "covered by common specification and chapter introduction"
+    ],
+    "365": [
+      "replaced by numbered outline"
+    ],
+    "369": [
+      "replaced by numbered outline"
+    ],
+    "372": [
+      "replaced by numbered outline"
+    ],
+    "375": [
+      "replaced by numbered outline"
+    ],
+    "379": [
+      "replaced by numbered outline"
+    ],
+    "382": [
+      "replaced by numbered outline"
+    ],
+    "385": [
+      "replaced by numbered outline"
+    ],
+    "392": [
+      "replaced by numbered outline"
+    ],
+    "399": [
+      "replaced by numbered outline"
+    ],
+    "406": [
+      "replaced by numbered outline"
+    ],
+    "413": [
+      "replaced by numbered outline"
+    ],
+    "417": [
+      "replaced by numbered outline"
+    ],
+    "422": [
+      "replaced by numbered outline"
+    ],
+    "425": [
+      "replaced by numbered outline"
+    ],
+    "428": [
+      "replaced by numbered outline"
+    ],
+    "435": [
+      "replaced by numbered outline"
+    ],
+    "440": [
+      "replaced by numbered outline"
+    ],
+    "449": [
+      "replaced by numbered outline"
+    ],
+    "457": [
+      "replaced by numbered outline"
+    ],
+    "465": [
+      "replaced by numbered outline"
+    ],
+    "469": [
+      "replaced by numbered outline"
+    ],
+    "471": [
+      "replaced by numbered outline"
+    ]
+  },
+  "new_media_parts": [
+    "word/media/migrated-4092e5695d88c5ee.png",
+    "word/media/migrated-2a3f8c2241469905.png",
+    "word/media/migrated-51c8088560c6d672.png",
+    "word/media/migrated-27852427f3cdd5b2.png",
+    "word/media/migrated-8a6af463e087c078.png",
+    "word/media/migrated-39bcb98273a801be.png",
+    "word/media/migrated-b5b18f9cac570503.png",
+    "word/media/migrated-b2eadd949bb351cc.png",
+    "word/media/migrated-d5c9b331bcf665b0.png",
+    "word/media/migrated-430edeb968b79cf2.png",
+    "word/media/migrated-2225af8c7d561c48.png",
+    "word/media/migrated-8f2c8a9d634b510f.png",
+    "word/media/migrated-580f794d3505412d.png",
+    "word/media/migrated-e6c5299e980abbcd.png",
+    "word/media/migrated-493480c4564239a0.png",
+    "word/media/migrated-d69fcbc94c791e88.png",
+    "word/media/migrated-52e6a50aae0f3d6d.png",
+    "word/media/migrated-aef33157d266510e.png",
+    "word/media/migrated-28c9530e12c7bd4d.png",
+    "word/media/migrated-268effe7377e9039.png",
+    "word/media/migrated-bdcd6ae6b0f518bd.png",
+    "word/media/migrated-46a4578c7d15471a.png",
+    "word/media/migrated-8e81f4c9707d4701.png",
+    "word/media/migrated-3ca65427c4446781.png",
+    "word/media/migrated-a9de536c3142c5c6.png",
+    "word/media/migrated-0db66b90780714cb.png"
+  ]
+}

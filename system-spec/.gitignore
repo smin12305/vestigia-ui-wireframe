@@ -1,0 +1,24 @@
+# Dependencies
+**/node_modules/
+
+# Generated build output
+**/dist/
+
+# Browser test profiles and caches
+**/.chrome-*/
+**/.headless-profile/
+
+# Temporary document exports
+.tmp_battle_doc/
+
+# Local environment and logs
+.env
+.env.*
+!.env.example
+*.log
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

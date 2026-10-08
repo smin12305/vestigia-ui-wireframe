@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="720" viewBox="0 0 960 720" role="img" aria-labelledby="title desc">
+  <title id="title">Waredo 2.0 전투판 좌표 규칙</title>
+  <desc id="desc">6 곱하기 6 전투판을 예시로 왼쪽 아래 셀이 0,0이고 X축은 오른쪽, Y축은 위쪽으로 증가하는 좌표 규칙을 보여준다.</desc>
+
+  <rect width="960" height="720" fill="#f7f9fc"/>
+  <rect x="48" y="38" width="864" height="644" rx="24" fill="#ffffff" stroke="#d8e0ec" stroke-width="2"/>
+
+  <text x="480" y="88" text-anchor="middle" font-family="Arial, 'Noto Sans KR', sans-serif" font-size="30" font-weight="700" fill="#172033">전투판 좌표 규칙</text>
+  <text x="480" y="122" text-anchor="middle" font-family="Arial, 'Noto Sans KR', sans-serif" font-size="17" fill="#5d687b">확정 규격 6×6 · 0 기반 좌표</text>
+
+  <!-- Board background and highlighted reference cells -->
+  <rect x="230" y="184" width="480" height="480" fill="#eef3f9" stroke="#263a5b" stroke-width="4"/>
+  <rect x="230" y="584" width="80" height="80" fill="#b9e4cc"/>
+  <rect x="310" y="584" width="80" height="80" fill="#dcecff"/>
+  <rect x="230" y="504" width="80" height="80" fill="#dcecff"/>
+  <rect x="630" y="184" width="80" height="80" fill="#ffe3a3"/>
+
+  <!-- Grid lines -->
+  <g stroke="#7f91aa" stroke-width="2">
+    <line x1="310" y1="184" x2="310" y2="664"/>
+    <line x1="390" y1="184" x2="390" y2="664"/>
+    <line x1="470" y1="184" x2="470" y2="664"/>
+    <line x1="550" y1="184" x2="550" y2="664"/>
+    <line x1="630" y1="184" x2="630" y2="664"/>
+    <line x1="230" y1="264" x2="710" y2="264"/>
+    <line x1="230" y1="344" x2="710" y2="344"/>
+    <line x1="230" y1="424" x2="710" y2="424"/>
+    <line x1="230" y1="504" x2="710" y2="504"/>
+    <line x1="230" y1="584" x2="710" y2="584"/>
+  </g>
+
+  <!-- Coordinate labels -->
+  <g font-family="Arial, 'Noto Sans KR', sans-serif" font-size="18" font-weight="700" fill="#263a5b" text-anchor="middle">
+    <text x="270" y="632">(0,0)</text>
+    <text x="350" y="632">(1,0)</text>
+    <text x="270" y="552">(0,1)</text>
+    <text x="670" y="232">(5,5)</text>
+  </g>
+
+  <!-- X axis -->
+  <line x1="230" y1="688" x2="780" y2="688" stroke="#2272d4" stroke-width="5"/>
+  <polygon points="780,688 758,676 758,700" fill="#2272d4"/>
+  <text x="800" y="696" font-family="Arial, 'Noto Sans KR', sans-serif" font-size="23" font-weight="700" fill="#155eaf">+X</text>
+  <text x="515" y="710" text-anchor="middle" font-family="Arial, 'Noto Sans KR', sans-serif" font-size="16" fill="#155eaf">오른쪽으로 증가</text>
+
+  <!-- Y axis -->
+  <line x1="198" y1="664" x2="198" y2="146" stroke="#d25743" stroke-width="5"/>
+  <polygon points="198,146 186,168 210,168" fill="#d25743"/>
+  <text x="177" y="138" text-anchor="middle" font-family="Arial, 'Noto Sans KR', sans-serif" font-size="23" font-weight="700" fill="#b44131">+Y</text>
+  <text x="128" y="424" text-anchor="middle" transform="rotate(-90 128 424)" font-family="Arial, 'Noto Sans KR', sans-serif" font-size="16" fill="#b44131">위쪽으로 증가</text>
+
+  <!-- Origin annotation -->
+  <line x1="270" y1="624" x2="128" y2="600" stroke="#348c5c" stroke-width="3"/>
+  <circle cx="270" cy="624" r="7" fill="#348c5c"/>
+  <rect x="62" y="546" width="150" height="62" rx="12" fill="#e5f5ec" stroke="#75b993" stroke-width="2"/>
+  <text x="137" y="572" text-anchor="middle" font-family="Arial, 'Noto Sans KR', sans-serif" font-size="17" font-weight="700" fill="#246d47">원점 셀</text>
+  <text x="137" y="595" text-anchor="middle" font-family="Arial, 'Noto Sans KR', sans-serif" font-size="15" fill="#246d47">왼쪽 아래 (0,0)</text>
+
+  <!-- Reading rule -->
+  <rect x="742" y="242" width="160" height="180" rx="16" fill="#f1f5fb" stroke="#b8c5d8" stroke-width="2"/>
+  <text x="822" y="276" text-anchor="middle" font-family="Arial, 'Noto Sans KR', sans-serif" font-size="19" font-weight="700" fill="#263a5b">좌표 읽기</text>
+  <text x="822" y="315" text-anchor="middle" font-family="Arial, 'Noto Sans KR', sans-serif" font-size="17" fill="#44536a">(X, Y)</text>
+  <text x="822" y="351" text-anchor="middle" font-family="Arial, 'Noto Sans KR', sans-serif" font-size="15" fill="#5d687b">첫 번째 값: 가로</text>
+  <text x="822" y="381" text-anchor="middle" font-family="Arial, 'Noto Sans KR', sans-serif" font-size="15" fill="#5d687b">두 번째 값: 세로</text>
+  <text x="822" y="410" text-anchor="middle" font-family="Arial, 'Noto Sans KR', sans-serif" font-size="14" fill="#7a8495">모든 축은 0부터</text>
+</svg>
